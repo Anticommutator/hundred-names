@@ -408,16 +408,23 @@ document.getElementById('quizOpen').addEventListener('click', async () => {
 // Difficulty: every wrong option is at least x away from the answer (Euclidean distance between the
 // L2-normalised vectors of square-rooted country shares, 0 = identical map, √2 = no overlap). Distractors are drawn from the
 // names closest to the answer that still clear x, so x sets how similar the maps of the options can be.
-const LEVELS = {easy: {x: 1.3, near: 0, label: 'Easy'}, medium: {x: 0.9, near: 25, label: 'Medium'}, hard: {x: 0.35, near: 10, label: 'Hard'}};
+const LEVELS = {easy: {x: 1.3, label: 'Easy'}, medium: {x: 0.9, label: 'Medium'}, hard: {x: 0.35, label: 'Hard'}};
 let qLevel = 'medium';
 const qNorm = p => p._u || (p._u = (() => { const r = Object.values(p.v).map(Math.sqrt); const n = Math.hypot(...r); const u = {}; for (const k in p.v) u[k] = Math.sqrt(p.v[k]) / n; return u; })());
 const qDist = (a, b) => { const ua = qNorm(a), ub = qNorm(b); let d = 0; for (const k in ua) if (ub[k]) d += ua[k] * ub[k]; return Math.sqrt(Math.max(0, 2 - 2 * d)); };
 const simPct = d => Math.round(Math.max(0, 1 - d * d / 2) * 100);
+// The range [x, √2] is cut into three equal distance bands; one wrong option comes from each:
+// a likely contender (closest band), a medium one and an unlikely one. Empty band → closest unused name above x.
 function pickDistractors(ans){
-  const L = LEVELS[qLevel];
-  let c = QUIZ.filter(p => p.k !== ans.k).map(p => ({p, d: qDist(ans, p)})).filter(o => o.d >= L.x);
-  if (L.near) c = c.sort((a, b) => a.d - b.d).slice(0, L.near);
-  return shuffle(c).slice(0, 3);
+  const x = LEVELS[qLevel].x, top = Math.SQRT2 + 1e-9, w = (top - x) / 3;
+  const c = QUIZ.filter(p => p.k !== ans.k).map(p => ({p, d: qDist(ans, p)})).filter(o => o.d >= x).sort((a, b) => a.d - b.d);
+  const used = new Set(), out = [];
+  for (let b = 0; b < 3; b++) {
+    const band = c.filter(o => o.d >= x + b * w && o.d < x + (b + 1) * w && !used.has(o.p.k));
+    const o = band.length ? band[Math.floor(Math.random() * band.length)] : c.find(o => !used.has(o.p.k));
+    if (o) { used.add(o.p.k); out.push(o); }
+  }
+  return out;
 }
 function quizRound(){
   const cand = QUIZ.filter(p => !qRecent.includes(p.k));

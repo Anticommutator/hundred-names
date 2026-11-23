@@ -45,5 +45,9 @@ The square root keeps a name's single stronghold from dominating (with plain sha
 After L2 normalisation, the distance between two names is the Euclidean distance between their vectors
 (0 = identical map, √2 ≈ 1.41 = no overlap); the "similarity" shown is the cosine, 1 − d²/2.
 Quiz difficulty sets a minimum distance x between the answer and every wrong option
-(easy 1.3, medium 0.9, hard 0.35); wrong options are drawn from the names closest to the answer that still clear x
-(medium: the 25 closest, hard: the 10 closest; easy: any).
+(easy 1.3, medium 0.9, hard 0.35). The range from x to √2 is split into three equal distance bands, and one
+wrong option is drawn from each: a likely contender, a medium one and an unlikely one.
+
+The quiz pool leaves out names with flat maps: names whose effective number of countries,
+1 / Σp² over the name's distribution across countries, exceeds 20 (David, Daniel, Maria, Sarah…).
+From the rest it takes the 400 names that are top-100 names in the most countries.
