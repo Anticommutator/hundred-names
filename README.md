@@ -11,7 +11,7 @@ An interactive table and world map for 140 countries plus the world:
 - the top 10 / 25 / 50 / 100 men's and women's names per country (click a country)
 - hover a name for its spellings and their shares; click it for a name page with a map of where it is most common
 - a quiz game: 8 rounds, guess a name from its map out of four options, 10 seconds per round,
-  up to 12.5 points for a fast right answer (100 max); easy / medium / hard levels
+  6.25–12.5 points for a right answer, more the faster (100 max); easy / medium / hard levels
 - for each name, the 5 names with the most similar geography
 - an option to merge spelling variants (Mohammed/Muhammad/Mohamed, Sergey/Sergei, José/Jose)
 - people per name, number of distinct names, share of women in the records

@@ -463,7 +463,7 @@ function quizStart(){
   quizBox.innerHTML = `
     <div class="qhead"><h2 id="qzTitle">Name quiz</h2><button class="close" id="qClose">Close</button></div>
     <p class="qprompt">You see a map of where one name is common. Pick the right name out of four. ${ROUNDS} rounds, ${SECS} seconds each.
-      A right answer scores up to ${PER} points, more the faster you are; a wrong answer or running out of time scores 0. The maximum is 100.</p>
+      A right answer scores between ${PER / 2} and ${PER} points, more the faster you are; a wrong answer or running out of time scores 0. The maximum is 100.</p>
     <div class="startrow"><div class="seg" id="qLevel" role="group" aria-label="Difficulty">${Object.entries(LEVELS).map(([k, l]) => `<button data-l="${k}" aria-pressed="${k === qLevel}">${l.label}</button>`).join('')}</div>
       <button class="go" id="qGo">Start game</button></div>
     <p class="bnote">Easy: the wrong names come from other parts of the world. Hard: one of them has a very similar map.</p>`;
@@ -510,7 +510,8 @@ function quizRound(){
     if (done) return; done = true; stopTimer();
     const rem = Math.max(0, SECS - (performance.now() - t0) / 1000);
     const right = picked === ans.k;
-    const pts = right ? Math.min(PER, Math.ceil(rem / SECS * PER * 10 - 1e-9) / 10) : 0;
+    // linear from 12.5 (instant) down to 6.25 (last moment), rounded up to 0.1
+    const pts = right ? Math.min(PER, Math.ceil((PER / 2 + PER / 2 * rem / SECS) * 10 - 1e-9) / 10) : 0;
     G.total = r1(G.total + pts);
     G.log.push({n: ans.n, k: ans.k, right, pts, timeout: picked == null});
     quizBox.querySelectorAll('.opts button').forEach(x => {
