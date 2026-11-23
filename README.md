@@ -40,7 +40,8 @@ Spain, Italy, Portugal and Latin America somewhat.
 
 ## Name distance
 
-Each name family (all spellings, both sexes) is a vector over countries: the share of people carrying it in each country.
+Each name family (all spellings, both sexes) is a vector over countries: the square root of the share of people carrying it in each country.
+The square root keeps a name's single stronghold from dominating (with plain shares, Mohammed's neighbours were Bangladeshi names because 39% of Bangladeshi men carry it; with square roots they are Ahmed, Ali and Noor). Dividing each country by its total or by its top name was also tested and worked less well.
 After L2 normalisation, the distance between two names is the Euclidean distance between their vectors
 (0 = identical map, √2 ≈ 1.41 = no overlap); the "similarity" shown is the cosine, 1 − d²/2.
 Quiz difficulty sets a minimum distance x between the answer and every wrong option
