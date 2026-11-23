@@ -9,6 +9,7 @@ An interactive table and world map for 140 countries plus the world:
 - coverage of the top 100 first names: everyone, men and women separately
 - coverage of the top 100 surnames
 - the top 10 / 25 / 50 / 100 men's and women's names per country (click a country)
+- hover a name for its spellings and their shares; click it for a name page with a map of where it is most common
 - an option to merge spelling variants (Mohammed/Muhammad/Mohamed, Sergey/Sergei, José/Jose)
 - people per name, number of distinct names, share of women in the records
 - an unweighted country average next to the population-weighted world figure
@@ -31,4 +32,5 @@ Spain, Italy, Portugal and Latin America somewhat.
 
 - `index.html` — the whole page; data is embedded
 - `names.json` — per-country top-100 name lists, as listed and with spellings merged (loaded when a country is opened)
+- `ni/*.json` — cross-country name index (sharded by first letter), loaded when a name is clicked
 - `countries-110m.json` — country shapes from [world-atlas](https://github.com/topojson/world-atlas) (Natural Earth, public domain)
