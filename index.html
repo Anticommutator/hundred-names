@@ -159,6 +159,13 @@ tr.open td{box-shadow:inset 0 -2px 0 var(--accent)}
 .opts button.ok{background:var(--accent);border-color:var(--accent);color:var(--surface)}
 .opts button.bad{border-color:var(--women);color:var(--women);text-decoration:line-through}
 .opts button:disabled{cursor:default}
+.opts button small.qsim{display:block;font:400 .75rem var(--mono);color:var(--muted);text-decoration:none;margin-top:2px}
+.nn{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.nn li{display:grid;grid-template-columns:minmax(0,9rem) minmax(0,1fr) 3.2rem;gap:10px;align-items:center;padding:3px 6px;border-radius:5px;cursor:pointer;font-size:.92rem}
+.nn li:hover,.nn li:focus-visible{background:var(--accent-soft);outline:none}
+.nn li .t{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.nn li .t i{display:block;height:100%;background:var(--accent);border-radius:4px}
+.nn li .v{font:500 .86rem var(--mono);text-align:right}
 .qres{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;min-height:2.5rem}
 .qres p{margin:0}
 .qres .row{display:flex;gap:8px;flex-wrap:wrap}
@@ -398,26 +405,43 @@ document.getElementById('quizOpen').addEventListener('click', async () => {
   if (!QUIZ) { quizBox.innerHTML = '<p>The quiz could not load.</p>'; return; }
   quizRound();
 });
+// Difficulty: every wrong option is at least x away from the answer (Euclidean distance between the
+// L2-normalised country-share vectors, 0 = identical map, √2 = no overlap). Distractors are drawn from the
+// names closest to the answer that still clear x, so x sets how similar the maps of the options can be.
+const LEVELS = {easy: {x: 1.3, near: 0, label: 'Easy'}, medium: {x: 0.9, near: 25, label: 'Medium'}, hard: {x: 0.35, near: 10, label: 'Hard'}};
+let qLevel = 'medium';
+const qNorm = p => p._u || (p._u = (() => { const n = Math.hypot(...Object.values(p.v)); const u = {}; for (const k in p.v) u[k] = p.v[k] / n; return u; })());
+const qDist = (a, b) => { const ua = qNorm(a), ub = qNorm(b); let d = 0; for (const k in ua) if (ub[k]) d += ua[k] * ub[k]; return Math.sqrt(Math.max(0, 2 - 2 * d)); };
+const simPct = d => Math.round(Math.max(0, 1 - d * d / 2) * 100);
+function pickDistractors(ans){
+  const L = LEVELS[qLevel];
+  let c = QUIZ.filter(p => p.k !== ans.k).map(p => ({p, d: qDist(ans, p)})).filter(o => o.d >= L.x);
+  if (L.near) c = c.sort((a, b) => a.d - b.d).slice(0, L.near);
+  return shuffle(c).slice(0, 3);
+}
 function quizRound(){
   const cand = QUIZ.filter(p => !qRecent.includes(p.k));
   const ans = cand[Math.floor(Math.random() * cand.length)];
   qRecent = [ans.k, ...qRecent].slice(0, 40);
-  const same = shuffle(QUIZ.filter(p => p.k !== ans.k && p.g === ans.g));
-  const near = same.filter(p => p.r === ans.r).slice(0, 2);
-  const opts = shuffle([ans, ...near, ...same.filter(p => !near.includes(p)).slice(0, 3 - near.length)]);
-  const gword = ans.g === 'm' ? 'men' : 'women';
+  const dis = pickDistractors(ans);
+  const dmap = {}; for (const o of dis) dmap[o.p.k] = o.d;
+  const opts = shuffle([ans, ...dis.map(o => o.p)]);
+  const gword = 'people';
   quizBox.innerHTML = `
     <div class="qhead"><h2 id="qzTitle">Which name is this?</h2>
-      <div style="display:flex;gap:12px;align-items:center"><span class="score">Score <b>${qScore}/${qRounds}</b>${qStreak > 1 ? ` · streak <b>${qStreak}</b>` : ''}</span><button class="close" id="qClose">Close</button></div></div>
-    <p class="qprompt">The map shows what share of <b>${gword}</b> in each country carry one name (all spellings combined).</p>
+      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+        <div class="seg" id="qLevel" role="group" aria-label="Difficulty">${Object.entries(LEVELS).map(([k, l]) => `<button data-l="${k}" aria-pressed="${k === qLevel}" title="Wrong options at least ${l.x} away from the answer">${l.label}</button>`).join('')}</div>
+        <span class="score">Score <b>${qScore}/${qRounds}</b>${qStreak > 1 ? ` · streak <b>${qStreak}</b>` : ''}</span><button class="close" id="qClose">Close</button></div></div>
+    <p class="qprompt">The map shows what share of <b>people</b> in each country carry one name (all spellings combined).</p>
     <svg id="qmap" viewBox="0 0 960 470" role="img" aria-label="Quiz map"></svg>
     <div class="legend" id="qlegend"></div>
     <div class="opts">${opts.map((o, i) => `<button data-k="${o.k}"><span class="na" style="font:400 .75rem var(--mono);margin-right:6px">${i + 1}</span>${esc(o.n)}</button>`).join('')}</div>
     <div class="qres" id="qres"><p class="na" style="color:var(--muted);font-size:.85rem">Press 1–4 or click an answer.</p></div>`;
   document.getElementById('qClose').onclick = closeQuiz;
+  quizBox.querySelectorAll('#qLevel button').forEach(b => b.onclick = () => { qLevel = b.dataset.l; quizRound(); });
   // map
   const mx = Math.max(...Object.values(ans.v));
-  const interp = d3.interpolateRgb(css('--ramp0'), css(ans.g === 'm' ? '--men' : '--women'));
+  const interp = d3.interpolateRgb(css('--ramp0'), css('--accent'));
   const svg = d3.select('#qmap');
   if (FEATS) {
     svg.append('path').datum({type: 'Sphere'}).attr('class', 'sphere').attr('d', PATH);
@@ -429,7 +453,11 @@ function quizRound(){
   quizBox.querySelectorAll('.opts button').forEach(b => b.onclick = () => {
     const right = b.dataset.k === ans.k;
     qRounds++; if (right) { qScore++; qStreak++; } else qStreak = 0;
-    quizBox.querySelectorAll('.opts button').forEach(x => { x.disabled = true; if (x.dataset.k === ans.k) x.classList.add('ok'); else if (x === b) x.classList.add('bad'); });
+    quizBox.querySelectorAll('.opts button').forEach(x => {
+      x.disabled = true;
+      if (x.dataset.k === ans.k) x.classList.add('ok');
+      else { if (x === b) x.classList.add('bad'); x.insertAdjacentHTML('beforeend', `<small class="qsim">${simPct(dmap[x.dataset.k])}% similar map</small>`); }
+    });
     const topC = Object.entries(ans.v).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([iso, p]) => `${byIso[iso]?.n || iso} ${pfmt(p)}`).join(', ');
     document.getElementById('qres').innerHTML = `<p>${right ? '<b>Correct!</b>' : `<b>Not quite.</b> It was <b>${esc(ans.n)}</b>.`} Highest in ${topC}.${ans.sp.length ? ` <span style="color:var(--muted)">Spellings included: ${ans.sp.map(esc).join(', ')}.</span>` : ''}</p>
       <div class="row"><button id="qInfo">About ${esc(ans.n)}</button><button class="primary" id="qNext">Next name →</button></div>`;
@@ -438,7 +466,7 @@ function quizRound(){
     document.getElementById('qInfo').onclick = () => {
       quizOv.hidden = true;
       if (mode !== 'mrg') document.querySelector('#spell button[data-k="mrg"]').click();
-      openName({n: ans.n, k: ans.k, g: ans.g});
+      openName({n: ans.n, k: ans.k});
     };
     document.getElementById('qNext').focus();
   });
@@ -496,6 +524,9 @@ async function openName(it){
       <div class="chips">${(mode === 'mrg' ? sp : otherSp).slice(0, 16).map(([n, c]) => `<span>${esc(n)} <small>${num(c)}</small></span>`).join('')}</div></div>` : ''}
     <svg id="nmap" viewBox="0 0 960 470" role="img" aria-label="Map of the share of ${gword} named ${esc(it.n)}"></svg>
     <div class="legend" id="nlegend"></div>
+    ${ent.nn?.length ? `<div class="rank2" style="grid-template-columns:1fr"><div><h3>Names with the most similar geography</h3>
+      <ol class="nn">${ent.nn.map(([k, n, d]) => `<li tabindex="0" role="button" data-k="${k}" data-n="${esc(n)}" title="Distance ${d.toFixed(2)} (0 = identical map, 1.41 = no overlap)"><span class="c">${esc(n)}</span><span class="t"><i style="width:${simPct(d)}%"></i></span><span class="v">${simPct(d)}%</span></li>`).join('')}</ol>
+      <p class="foot" style="margin:6px 0 0;color:var(--muted);font-size:.8rem">Similarity compares where each name is common: the share of people carrying it in every country, all spellings and both sexes combined, as a normalised vector. 100% means the same map.</p></div></div>` : ''}
     <div class="rank2">
       <div><h3>Highest share of ${gword}</h3><ol>${byShare.map(e => `<li data-s="${e[0]}"><span class="c">${esc(cname(e[0]))}</span><span class="r">#${e[3]}</span><span class="v">${pfmt(e[4])}</span></li>`).join('')}</ol></div>
       <div><h3>Most people</h3><ol>${byCount.map(([s, c]) => `<li data-s="${s}"><span class="c">${esc(cname(s))}</span><span class="r">${per[s] && tot ? Math.round(c / tot * 100) + '%' : ''}</span><span class="v">${num(c)}</span></li>`).join('')}</ol></div>
@@ -503,7 +534,12 @@ async function openName(it){
     <p class="foot" style="margin:0;color:var(--muted);font-size:.8rem">Counts cover the top 250–300 names of each of the ${DATA.length - 1} countries in this dataset, so the name may also occur in countries not listed here. "#" is the name's rank among ${gword} in that country.</p>`;
   document.getElementById('nbClose').onclick = closeName;
   document.getElementById('nbClose').focus();
-  box.querySelectorAll('.rank2 li').forEach(li => li.onclick = () => { closeName(); openDetail(li.dataset.s); });
+  box.querySelectorAll('.rank2 li[data-s]').forEach(li => li.onclick = () => { closeName(); openDetail(li.dataset.s); });
+  box.querySelectorAll('.nn li').forEach(li => {
+    const go = () => openName({n: li.dataset.n, k: li.dataset.k});
+    li.onclick = go; li.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } };
+  });
+  box.scrollTop = 0; overlay.scrollTop = 0;
   // map
   if (FEATS) {
     const vals = {}; for (const e of gRows) vals[byS[e[0]].iso] = e[4];
