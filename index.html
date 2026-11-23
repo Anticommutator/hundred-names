@@ -139,7 +139,31 @@ tr.open td{box-shadow:inset 0 -2px 0 var(--accent)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
 .chips span{border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:.84rem}
 .chips span small{color:var(--muted);font-family:var(--mono)}
-#nmap{width:100%;height:auto;display:block}
+#nmap,#qmap{width:100%;height:auto;display:block}
+#qmap path{stroke:var(--surface);stroke-width:.4}
+#qmap path.sphere{fill:var(--bg);stroke:var(--line)}
+.quizbtn{align-self:flex-start;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;font:700 1.05rem var(--display);
+  background:var(--accent);color:var(--surface);border:0;border-radius:10px;padding:12px 18px;cursor:pointer}
+.quizbtn span{font:400 .85rem var(--body);opacity:.85}
+.quizbtn:hover{filter:brightness(1.08)}
+.quizbtn:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.qhead h2{font-size:1.5rem;margin:0}
+.score{font:500 .9rem var(--mono);color:var(--muted)}
+.score b{color:var(--fg)}
+.qprompt{margin:0;font-size:1rem}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.opts button{font:600 1.05rem var(--body);padding:14px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.opts button.ok{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.opts button.bad{border-color:var(--women);color:var(--women);text-decoration:line-through}
+.opts button:disabled{cursor:default}
+.qres{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;min-height:2.5rem}
+.qres p{margin:0}
+.qres .row{display:flex;gap:8px;flex-wrap:wrap}
+.qres button{font:500 .9rem var(--body);border-radius:8px;padding:8px 14px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--fg)}
+.qres button.primary{background:var(--fg);color:var(--surface);border-color:var(--fg)}
 #nmap path{stroke:var(--surface);stroke-width:.4}
 #nmap path.sphere{fill:var(--bg);stroke:var(--line)}
 .rank2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
@@ -160,6 +184,8 @@ tr.open td{box-shadow:inset 0 -2px 0 var(--accent)}
   </header>
 
   <section class="kpis" id="kpis" aria-label="Highlights"></section>
+
+  <button class="quizbtn" id="quizOpen">Play the name quiz <span>Guess a name from its map</span></button>
 
   <section class="controls" aria-label="Table controls">
     <div class="group"><span>Coverage of top 100</span>
@@ -233,6 +259,7 @@ tr.open td{box-shadow:inset 0 -2px 0 var(--accent)}
       </ul>
     </div>
   </section>
+  <div class="overlay" id="quizOv" hidden><div class="modal" id="quizBox" role="dialog" aria-modal="true" aria-labelledby="qzTitle"></div></div>
   <div id="tip" hidden></div>
   <div class="overlay" id="overlay" hidden><div class="modal" id="namebox" role="dialog" aria-modal="true" aria-labelledby="nbTitle"></div></div>
   <footer>Data: forebears.io forename and surname rankings per country, retrieved November 2026. Shares are of the people Forebears has records for.</footer>
@@ -353,6 +380,70 @@ detailEl.addEventListener('focusin', e => { const t = e.target.closest('.nm'); i
 detailEl.addEventListener('focusout', () => { tipEl.hidden = true; });
 detailEl.addEventListener('click', e => { const t = e.target.closest('.nm'); if (t) { tipEl.hidden = true; openName(LISTCACHE[t.dataset.id]); } });
 detailEl.addEventListener('keydown', e => { const t = e.target.closest('.nm'); if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); tipEl.hidden = true; openName(LISTCACHE[t.dataset.id]); } });
+
+// --- quiz ---
+const quizOv = document.getElementById('quizOv'), quizBox = document.getElementById('quizBox');
+let QUIZ = null, qScore = 0, qRounds = 0, qStreak = 0, qRecent = [];
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+function closeQuiz(){ quizOv.hidden = true; document.body.style.overflow = ''; document.getElementById('quizOpen').focus(); }
+quizOv.addEventListener('click', e => { if (e.target === quizOv) closeQuiz(); });
+addEventListener('keydown', e => {
+  if (quizOv.hidden) return;
+  if (e.key === 'Escape') closeQuiz();
+  const n = +e.key; if (n >= 1 && n <= 4) quizBox.querySelectorAll('.opts button')[n - 1]?.click();
+});
+document.getElementById('quizOpen').addEventListener('click', async () => {
+  quizOv.hidden = false; document.body.style.overflow = 'hidden';
+  if (!QUIZ) { quizBox.innerHTML = '<p>Loading names…</p>'; QUIZ = await fetch('quiz.json').then(r => r.json()).catch(() => null); }
+  if (!QUIZ) { quizBox.innerHTML = '<p>The quiz could not load.</p>'; return; }
+  quizRound();
+});
+function quizRound(){
+  const cand = QUIZ.filter(p => !qRecent.includes(p.k));
+  const ans = cand[Math.floor(Math.random() * cand.length)];
+  qRecent = [ans.k, ...qRecent].slice(0, 40);
+  const same = shuffle(QUIZ.filter(p => p.k !== ans.k && p.g === ans.g));
+  const near = same.filter(p => p.r === ans.r).slice(0, 2);
+  const opts = shuffle([ans, ...near, ...same.filter(p => !near.includes(p)).slice(0, 3 - near.length)]);
+  const gword = ans.g === 'm' ? 'men' : 'women';
+  quizBox.innerHTML = `
+    <div class="qhead"><h2 id="qzTitle">Which name is this?</h2>
+      <div style="display:flex;gap:12px;align-items:center"><span class="score">Score <b>${qScore}/${qRounds}</b>${qStreak > 1 ? ` · streak <b>${qStreak}</b>` : ''}</span><button class="close" id="qClose">Close</button></div></div>
+    <p class="qprompt">The map shows what share of <b>${gword}</b> in each country carry one name (all spellings combined).</p>
+    <svg id="qmap" viewBox="0 0 960 470" role="img" aria-label="Quiz map"></svg>
+    <div class="legend" id="qlegend"></div>
+    <div class="opts">${opts.map((o, i) => `<button data-k="${o.k}"><span class="na" style="font:400 .75rem var(--mono);margin-right:6px">${i + 1}</span>${esc(o.n)}</button>`).join('')}</div>
+    <div class="qres" id="qres"><p class="na" style="color:var(--muted);font-size:.85rem">Press 1–4 or click an answer.</p></div>`;
+  document.getElementById('qClose').onclick = closeQuiz;
+  // map
+  const mx = Math.max(...Object.values(ans.v));
+  const interp = d3.interpolateRgb(css('--ramp0'), css(ans.g === 'm' ? '--men' : '--women'));
+  const svg = d3.select('#qmap');
+  if (FEATS) {
+    svg.append('path').datum({type: 'Sphere'}).attr('class', 'sphere').attr('d', PATH);
+    svg.selectAll('path.c').data(FEATS).join('path').attr('class', 'c').attr('d', PATH)
+      .attr('fill', f => ans.v[f.id] != null ? interp(Math.sqrt(ans.v[f.id] / mx)) : (byIso[f.id] ? css('--ramp0') : css('--nodata')))
+      .append('title').text(f => byIso[f.id] ? `${f.properties.name}: ${ans.v[f.id] != null ? pfmt(ans.v[f.id]) : 'below the top names'}` : `${f.properties.name}: no data`);
+  }
+  document.getElementById('qlegend').innerHTML = `<span>Share of ${gword}</span><span>0%</span><span class="ramp" style="background:linear-gradient(90deg,${interp(0)},${interp(1)})"></span><span>${pfmt(mx)}</span><span><span class="nod"></span>no data</span>`;
+  quizBox.querySelectorAll('.opts button').forEach(b => b.onclick = () => {
+    const right = b.dataset.k === ans.k;
+    qRounds++; if (right) { qScore++; qStreak++; } else qStreak = 0;
+    quizBox.querySelectorAll('.opts button').forEach(x => { x.disabled = true; if (x.dataset.k === ans.k) x.classList.add('ok'); else if (x === b) x.classList.add('bad'); });
+    const topC = Object.entries(ans.v).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([iso, p]) => `${byIso[iso]?.n || iso} ${pfmt(p)}`).join(', ');
+    document.getElementById('qres').innerHTML = `<p>${right ? '<b>Correct!</b>' : `<b>Not quite.</b> It was <b>${esc(ans.n)}</b>.`} Highest in ${topC}.${ans.sp.length ? ` <span style="color:var(--muted)">Spellings included: ${ans.sp.map(esc).join(', ')}.</span>` : ''}</p>
+      <div class="row"><button id="qInfo">About ${esc(ans.n)}</button><button class="primary" id="qNext">Next name →</button></div>`;
+    quizBox.querySelector('.score').innerHTML = `Score <b>${qScore}/${qRounds}</b>${qStreak > 1 ? ` · streak <b>${qStreak}</b>` : ''}`;
+    document.getElementById('qNext').onclick = quizRound;
+    document.getElementById('qInfo').onclick = () => {
+      quizOv.hidden = true;
+      if (mode !== 'mrg') document.querySelector('#spell button[data-k="mrg"]').click();
+      openName({n: ans.n, k: ans.k, g: ans.g});
+    };
+    document.getElementById('qNext').focus();
+  });
+  quizBox.querySelector('.opts button').focus();
+}
 
 // --- name panel ---
 const SHARDS = {};
