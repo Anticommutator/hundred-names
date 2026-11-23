@@ -159,6 +159,31 @@ tr.open td{box-shadow:inset 0 -2px 0 var(--accent)}
 .opts button.ok{background:var(--accent);border-color:var(--accent);color:var(--surface)}
 .opts button.bad{border-color:var(--women);color:var(--women);text-decoration:line-through}
 .opts button:disabled{cursor:default}
+.timer{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.timer i{display:block;height:100%;width:100%;background:var(--accent);border-radius:4px}
+.timer i.low{background:var(--women)}
+.tleft{font:500 .85rem var(--mono);color:var(--muted);margin-top:-10px;text-align:right}
+.startrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.go{font:600 .95rem var(--body);background:var(--accent);color:var(--surface);border:0;border-radius:8px;padding:10px 18px;cursor:pointer}
+.go:disabled{opacity:.6;cursor:default}
+.go:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.bnote{margin:0;color:var(--muted);font-size:.85rem}
+.board{border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:8px}
+.bhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.bhead h3{margin:0;font:700 1.1rem var(--display)}
+.blist,.glog{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
+.blist li,.glog li{display:grid;grid-template-columns:2rem minmax(0,1fr) auto;gap:10px;padding:5px 8px;border-radius:6px;align-items:center}
+.blist li:nth-child(odd){background:var(--bg)}
+.blist li.me{outline:1.5px solid var(--accent)}
+.blist .r,.glog .r{font:400 .8rem var(--mono);color:var(--muted)}
+.blist .n,.glog .n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.blist .s,.glog .s{font:600 .95rem var(--mono)}
+.glog li.ok .s{color:var(--accent)} .glog li.bad .s{color:var(--muted)}
+.saveform{display:flex;flex-direction:column;gap:6px}
+.saveform label{font-weight:600} .saveform label span{font-weight:400;color:var(--muted)}
+.saveform input{font:500 1rem var(--body);padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);min-width:0;flex:1 1 200px}
+.saveform input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media (prefers-reduced-motion: reduce){.timer i{transition:none}}
 .opts button small.qsim{display:block;font:400 .75rem var(--mono);color:var(--muted);text-decoration:none;margin-top:2px}
 .nn{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
 .nn li{display:grid;grid-template-columns:minmax(0,9rem) minmax(0,1fr) 3.2rem;gap:10px;align-items:center;padding:3px 6px;border-radius:5px;cursor:pointer;font-size:.92rem}
@@ -388,35 +413,40 @@ detailEl.addEventListener('focusout', () => { tipEl.hidden = true; });
 detailEl.addEventListener('click', e => { const t = e.target.closest('.nm'); if (t) { tipEl.hidden = true; openName(LISTCACHE[t.dataset.id]); } });
 detailEl.addEventListener('keydown', e => { const t = e.target.closest('.nm'); if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); tipEl.hidden = true; openName(LISTCACHE[t.dataset.id]); } });
 
-// --- quiz ---
+// --- quiz game: 8 rounds, 10 s each, up to 12.5 points per round ---
 const quizOv = document.getElementById('quizOv'), quizBox = document.getElementById('quizBox');
-let QUIZ = null, qScore = 0, qRounds = 0, qStreak = 0, qRecent = [];
+let QUIZ = null, qRecent = [];
+const ROUNDS = 8, SECS = 10, PER = 12.5;
 const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-function closeQuiz(){ quizOv.hidden = true; document.body.style.overflow = ''; document.getElementById('quizOpen').focus(); }
+const r1 = x => Math.round(x * 10) / 10;
+let G = null, tick = null;   // current game
+function stopTimer(){ if (tick) cancelAnimationFrame(tick); tick = null; }
+function closeQuiz(){ stopTimer(); G = null; quizOv.hidden = true; document.body.style.overflow = ''; document.getElementById('quizOpen').focus(); }
 quizOv.addEventListener('click', e => { if (e.target === quizOv) closeQuiz(); });
 addEventListener('keydown', e => {
   if (quizOv.hidden) return;
   if (e.key === 'Escape') closeQuiz();
+  if (e.target.tagName === 'INPUT') return;
   const n = +e.key; if (n >= 1 && n <= 4) quizBox.querySelectorAll('.opts button')[n - 1]?.click();
 });
 document.getElementById('quizOpen').addEventListener('click', async () => {
   quizOv.hidden = false; document.body.style.overflow = 'hidden';
   if (!QUIZ) { quizBox.innerHTML = '<p>Loading names…</p>'; QUIZ = await fetch('quiz.json').then(r => r.json()).catch(() => null); }
   if (!QUIZ) { quizBox.innerHTML = '<p>The quiz could not load.</p>'; return; }
-  quizRound();
+  quizStart();
 });
 // Difficulty: every wrong option is at least x away from the answer (Euclidean distance between the
-// L2-normalised vectors of square-rooted country shares, 0 = identical map, √2 = no overlap). Distractors are drawn from the
-// names closest to the answer that still clear x, so x sets how similar the maps of the options can be.
+// L2-normalised vectors of square-rooted country shares, 0 = identical map, √2 = no overlap).
 const LEVELS = {easy: {x: 1.3, label: 'Easy'}, medium: {x: 0.9, label: 'Medium'}, hard: {x: 0.35, label: 'Hard'}};
 let qLevel = 'medium';
+try { qLevel = localStorage.getItem('hn-level') || 'medium'; if (!LEVELS[qLevel]) qLevel = 'medium'; } catch (e) {}
 const qNorm = p => p._u || (p._u = (() => { const r = Object.values(p.v).map(Math.sqrt); const n = Math.hypot(...r); const u = {}; for (const k in p.v) u[k] = Math.sqrt(p.v[k]) / n; return u; })());
 const qDist = (a, b) => { const ua = qNorm(a), ub = qNorm(b); let d = 0; for (const k in ua) if (ub[k]) d += ua[k] * ub[k]; return Math.sqrt(Math.max(0, 2 - 2 * d)); };
 const simPct = d => Math.round(Math.max(0, 1 - d * d / 2) * 100);
 // The range [x, √2] is cut into three equal distance bands; one wrong option comes from each:
 // a likely contender (closest band), a medium one and an unlikely one. Empty band → closest unused name above x.
-function pickDistractors(ans){
-  const x = LEVELS[qLevel].x, top = Math.SQRT2 + 1e-9, w = (top - x) / 3;
+function pickDistractors(ans, lvl){
+  const x = LEVELS[lvl].x, top = Math.SQRT2 + 1e-9, w = (top - x) / 3;
   const c = QUIZ.filter(p => p.k !== ans.k).map(p => ({p, d: qDist(ans, p)})).filter(o => o.d >= x).sort((a, b) => a.d - b.d);
   const used = new Set(), out = [];
   for (let b = 0; b < 3; b++) {
@@ -426,58 +456,99 @@ function pickDistractors(ans){
   }
   return out;
 }
+
+// ---- screens ----
+function quizStart(){
+  stopTimer(); G = null;
+  quizBox.innerHTML = `
+    <div class="qhead"><h2 id="qzTitle">Name quiz</h2><button class="close" id="qClose">Close</button></div>
+    <p class="qprompt">You see a map of where one name is common. Pick the right name out of four. ${ROUNDS} rounds, ${SECS} seconds each.
+      A right answer scores up to ${PER} points, more the faster you are; a wrong answer or running out of time scores 0. The maximum is 100.</p>
+    <div class="startrow"><div class="seg" id="qLevel" role="group" aria-label="Difficulty">${Object.entries(LEVELS).map(([k, l]) => `<button data-l="${k}" aria-pressed="${k === qLevel}">${l.label}</button>`).join('')}</div>
+      <button class="go" id="qGo">Start game</button></div>
+    <p class="bnote">Easy: the wrong names come from other parts of the world. Hard: one of them has a very similar map.</p>`;
+  document.getElementById('qClose').onclick = closeQuiz;
+  quizBox.querySelectorAll('#qLevel button').forEach(b => b.onclick = () => {
+    qLevel = b.dataset.l; try { localStorage.setItem('hn-level', qLevel); } catch (e) {}
+    quizBox.querySelectorAll('#qLevel button').forEach(x => x.setAttribute('aria-pressed', x.dataset.l === qLevel));
+  });
+  document.getElementById('qGo').onclick = () => { G = {level: qLevel, round: 0, total: 0, log: []}; quizRound(); };
+  document.getElementById('qGo').focus();
+}
 function quizRound(){
+  stopTimer();
   const cand = QUIZ.filter(p => !qRecent.includes(p.k));
   const ans = cand[Math.floor(Math.random() * cand.length)];
   qRecent = [ans.k, ...qRecent].slice(0, 40);
-  const dis = pickDistractors(ans);
+  const dis = pickDistractors(ans, G.level);
   const dmap = {}; for (const o of dis) dmap[o.p.k] = o.d;
   const opts = shuffle([ans, ...dis.map(o => o.p)]);
-  const gword = 'people';
+  G.round++;
   quizBox.innerHTML = `
-    <div class="qhead"><h2 id="qzTitle">Which name is this?</h2>
-      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-        <div class="seg" id="qLevel" role="group" aria-label="Difficulty">${Object.entries(LEVELS).map(([k, l]) => `<button data-l="${k}" aria-pressed="${k === qLevel}" title="Wrong options at least ${l.x} away from the answer">${l.label}</button>`).join('')}</div>
-        <span class="score">Score <b>${qScore}/${qRounds}</b>${qStreak > 1 ? ` · streak <b>${qStreak}</b>` : ''}</span><button class="close" id="qClose">Close</button></div></div>
-    <p class="qprompt">The map shows what share of <b>people</b> in each country carry one name (all spellings combined).</p>
+    <div class="qhead"><h2 id="qzTitle">Round ${G.round} of ${ROUNDS}</h2>
+      <div style="display:flex;gap:12px;align-items:center"><span class="score">${LEVELS[G.level].label} · <b>${G.total.toFixed(1)}</b> pts</span><button class="close" id="qClose">Quit</button></div></div>
+    <div class="timer" aria-hidden="true"><i id="qBar"></i></div>
+    <div class="tleft" id="qLeft">${SECS.toFixed(1)} s</div>
     <svg id="qmap" viewBox="0 0 960 470" role="img" aria-label="Quiz map"></svg>
     <div class="legend" id="qlegend"></div>
     <div class="opts">${opts.map((o, i) => `<button data-k="${o.k}"><span class="na" style="font:400 .75rem var(--mono);margin-right:6px">${i + 1}</span>${esc(o.n)}</button>`).join('')}</div>
-    <div class="qres" id="qres"><p class="na" style="color:var(--muted);font-size:.85rem">Press 1–4 or click an answer.</p></div>`;
-  document.getElementById('qClose').onclick = closeQuiz;
-  quizBox.querySelectorAll('#qLevel button').forEach(b => b.onclick = () => { qLevel = b.dataset.l; quizRound(); });
-  // map
+    <div class="qres" id="qres"><p style="color:var(--muted);font-size:.85rem;margin:0">Share of people carrying the name, all spellings combined. Press 1–4 or click.</p></div>`;
+  document.getElementById('qClose').onclick = () => { stopTimer(); quizStart(); };
   const mx = Math.max(...Object.values(ans.v));
   const interp = d3.interpolateRgb(css('--ramp0'), css('--accent'));
-  const svg = d3.select('#qmap');
   if (FEATS) {
+    const svg = d3.select('#qmap');
     svg.append('path').datum({type: 'Sphere'}).attr('class', 'sphere').attr('d', PATH);
     svg.selectAll('path.c').data(FEATS).join('path').attr('class', 'c').attr('d', PATH)
       .attr('fill', f => ans.v[f.id] != null ? interp(Math.sqrt(ans.v[f.id] / mx)) : (byIso[f.id] ? css('--ramp0') : css('--nodata')))
       .append('title').text(f => byIso[f.id] ? `${f.properties.name}: ${ans.v[f.id] != null ? pfmt(ans.v[f.id]) : 'below the top names'}` : `${f.properties.name}: no data`);
   }
-  document.getElementById('qlegend').innerHTML = `<span>Share of ${gword}</span><span>0%</span><span class="ramp" style="background:linear-gradient(90deg,${interp(0)},${interp(1)})"></span><span>${pfmt(mx)}</span><span><span class="nod"></span>no data</span>`;
-  quizBox.querySelectorAll('.opts button').forEach(b => b.onclick = () => {
-    const right = b.dataset.k === ans.k;
-    qRounds++; if (right) { qScore++; qStreak++; } else qStreak = 0;
+  document.getElementById('qlegend').innerHTML = `<span>Share of people</span><span>0%</span><span class="ramp" style="background:linear-gradient(90deg,${interp(0)},${interp(1)})"></span><span>${pfmt(mx)}</span><span><span class="nod"></span>no data</span>`;
+  let done = false;
+  const t0 = performance.now(), bar = document.getElementById('qBar'), left = document.getElementById('qLeft');
+  const finish = (picked) => {
+    if (done) return; done = true; stopTimer();
+    const rem = Math.max(0, SECS - (performance.now() - t0) / 1000);
+    const right = picked === ans.k;
+    const pts = right ? Math.min(PER, Math.ceil(rem / SECS * PER * 10 - 1e-9) / 10) : 0;
+    G.total = r1(G.total + pts);
+    G.log.push({n: ans.n, k: ans.k, right, pts, timeout: picked == null});
     quizBox.querySelectorAll('.opts button').forEach(x => {
       x.disabled = true;
       if (x.dataset.k === ans.k) x.classList.add('ok');
-      else { if (x === b) x.classList.add('bad'); x.insertAdjacentHTML('beforeend', `<small class="qsim">${simPct(dmap[x.dataset.k])}% similar map</small>`); }
+      else { if (x.dataset.k === picked) x.classList.add('bad'); x.insertAdjacentHTML('beforeend', `<small class="qsim">${simPct(dmap[x.dataset.k])}% similar map</small>`); }
     });
-    const topC = Object.entries(ans.v).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([iso, p]) => `${byIso[iso]?.n || iso} ${pfmt(p)}`).join(', ');
-    document.getElementById('qres').innerHTML = `<p>${right ? '<b>Correct!</b>' : `<b>Not quite.</b> It was <b>${esc(ans.n)}</b>.`} Highest in ${topC}.${ans.sp.length ? ` <span style="color:var(--muted)">Spellings included: ${ans.sp.map(esc).join(', ')}.</span>` : ''}</p>
-      <div class="row"><button id="qInfo">About ${esc(ans.n)}</button><button class="primary" id="qNext">Next name →</button></div>`;
-    quizBox.querySelector('.score').innerHTML = `Score <b>${qScore}/${qRounds}</b>${qStreak > 1 ? ` · streak <b>${qStreak}</b>` : ''}`;
-    document.getElementById('qNext').onclick = quizRound;
-    document.getElementById('qInfo').onclick = () => {
-      quizOv.hidden = true;
-      if (mode !== 'mrg') document.querySelector('#spell button[data-k="mrg"]').click();
-      openName({n: ans.n, k: ans.k});
-    };
+    const topC = Object.entries(ans.v).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([iso, p]) => `${esc(byIso[iso]?.n || iso)} ${pfmt(p)}`).join(', ');
+    const head = picked == null ? `<b>Time’s up.</b> It was <b>${esc(ans.n)}</b>.` : right ? `<b>Correct! +${pts.toFixed(1)}</b>` : `<b>Not quite.</b> It was <b>${esc(ans.n)}</b>.`;
+    const last = G.round >= ROUNDS;
+    document.getElementById('qres').innerHTML = `<p>${head} Highest in ${topC}.</p>
+      <div class="row"><button class="primary" id="qNext">${last ? 'See your score →' : 'Next round →'}</button></div>`;
+    quizBox.querySelector('.score').innerHTML = `${LEVELS[G.level].label} · <b>${G.total.toFixed(1)}</b> pts`;
+    document.getElementById('qNext').onclick = last ? quizEnd : quizRound;
     document.getElementById('qNext').focus();
-  });
-  quizBox.querySelector('.opts button').focus();
+  };
+  const step = () => {
+    const el = (performance.now() - t0) / 1000, rem = Math.max(0, SECS - el);
+    bar.style.width = (rem / SECS * 100) + '%';
+    bar.classList.toggle('low', rem < 3);
+    left.textContent = rem.toFixed(1) + ' s';
+    if (rem <= 0) { finish(null); return; }
+    tick = requestAnimationFrame(step);
+  };
+  tick = requestAnimationFrame(step);
+  quizBox.querySelectorAll('.opts button').forEach(b => b.onclick = () => finish(b.dataset.k));
+}
+function quizEnd(){
+  stopTimer();
+  const g = G;
+  quizBox.innerHTML = `
+    <div class="qhead"><h2 id="qzTitle">${g.total.toFixed(1)} <span style="font-size:1rem;color:var(--muted)">/ 100</span></h2><button class="close" id="qClose">Close</button></div>
+    <p class="qprompt">${LEVELS[g.level].label} · ${g.log.filter(r => r.right).length} of ${ROUNDS} right</p>
+    <ol class="glog">${g.log.map((r, i) => `<li class="${r.right ? 'ok' : 'bad'}"><span class="r">${i + 1}</span><span class="n">${esc(r.n)}</span><span class="s">${r.right ? '+' + r.pts.toFixed(1) : r.timeout ? 'time' : '0'}</span></li>`).join('')}</ol>
+    <div class="startrow"><button class="go" id="qAgain">Play again</button></div>`;
+  document.getElementById('qClose').onclick = closeQuiz;
+  document.getElementById('qAgain').onclick = quizStart;
+  document.getElementById('qAgain').focus();
 }
 
 // --- name panel ---
