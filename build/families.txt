@@ -1,0 +1,134 @@
+# one family per line; first spelling names it ('_' = space inside a name)
+# lines starting with ! : spellings kept apart from what fold() would merge
+Muhammad Mohammed Mohamed Mohammad Muhammed Mohamad Muhamad Mohamud Mohammod Muhamed Mouhamed Mohamadou Muhammadu
+Ahmed Ahmad Ehmed Ahmadou
+Mahmoud Mahmud Mahmood Mahmut
+Mustafa Mostafa Moustafa Mustapha Mostapha Moustapha
+Abdullah Abdallah Abdulla Abdellah Abdalla Abdoulaye Abdullahi
+Hussein Hussain Husain Hossein Hosein Hussen Houssein Husein
+Hassan Hasan Hasaan Hassane
+Fatima Fatemeh Fatimah Fatuma Fatime
+Aisha Aicha Aysha Ayesha Aishah Aishat Aissa
+Khadija Khadijah Khadidja Khadeeja Kadija Kadidja
+Yusuf Youssef Yousef Yousif Youcef Yousuf Yusif Jusuf Yussuf Youssouf
+Ibrahim Ebrahim
+Omar Umar Oumar
+Maryam Mariam Meryem Mariyam
+Zainab Zeinab Zaynab Zineb
+Abdelkader Abdulkadir Abdelkadir Abdulqadir
+Ali Aly
+Karim Kareem
+Said Saeed Saïd Sayed Saeid
+Aleksandr Alexandr Aleksander Alexander Aleksandar
+Sergey Sergei Serguei Sergej
+Dmitry Dmitriy Dmitri Dmitrii
+Aleksey Alexey Aleksei Alexei Aleksej
+Andrey Andrei Andrej Andrii
+Yevgeny Evgeny Evgeniy Yevgeniy Evgenii Evgenij
+Nikolay Nikolai Nykolai Nikolaj
+Tatyana Tatiana Tatjana Tatiyana
+Natalya Natalia Nataliya Natalja Natalija
+Yelena Elena Yelyena
+Ekaterina Yekaterina
+Yuriy Yuri Yury Iurii Jurij
+Mariya Maryia Mariia Maria María Mária
+Anastasia Anastasiya Anastasiia
+Ksenia Kseniya Xenia
+Viktor Victor
+Vladimir Vladymyr Vladimer
+Mikhail Mikhael Michail
+Galina Halyna
+Lyudmila Ludmila Liudmila Ljudmila
+Olga Olha Olgha
+Catherine Katherine Kathryn Catharine Katharine
+Stephen Steven
+Jesus Jesús
+Jose José
+Joao João
+Antonio António Antônio
+Jean Jéan
+
+# --- split off (same look, different name or sound) ---
+!Abdoulaye   # split from Abdullah
+!Adél   # split from Adel
+!Adrienn   # split from Adrien
+!Aissa Aïssa   # split from Aisha
+!Allah Alla   # split from Alaa
+!Ami   # split from Amy
+!Ann   # split from An
+!Andri Andry Andrée   # split from Andrey
+!Anthi   # split from Antti
+!Aryeh   # split from Arie
+!Bella   # split from Béla
+!Katrin Kathrin Katrín   # split from Catherine
+!Chrysi   # split from Chrissy
+!Colleen   # split from Colin
+!Dalė   # split from Dale
+!Daniele   # split from Danielle
+!Dorin   # split from Doreen
+!Katerina Kateřina Kateryna   # split from Ekaterina
+!Emmanuelle   # split from Emanuele
+!Falah Fallah   # split from Phalla
+!Fath   # split from Phat
+!Fatih Fathi Fathih   # split from Fati
+!Fatma   # split from Fatima
+!György Györgyi Gyorgy   # split from Giorgi
+!Guðný   # split from Guðný
+!Huy   # split from Hui
+!Ibrahima Brahim   # split from Ibrahim
+!Iin   # split from Yin
+!Eeva   # split from Iva
+!Janne   # split from Jane
+!Jonah   # split from Jonna
+!Josée   # split from Josy
+!Junyi   # split from Jouni
+!Käthe   # split from Kate
+!Kätlin   # split from Kathleen
+!Kyo   # split from Kiyo
+!Kyoko   # split from Kiyoko
+!Kristinn   # split from Kristin
+!Lee Ly   # split from Li
+!Leen   # split from Lin
+!Line   # split from Lynne
+!Liying   # split from Ling
+!Lou Luu   # split from Lou
+!Masaaki   # split from Masaki
+!Mi   # split from My
+!Myan   # split from Mian
+!Michele   # split from Michelle
+!Michiyo   # split from Michio
+!Noa   # split from Noah
+!Oleh   # split from Oleh
+!Ólöf   # split from Olof
+!Qui   # split from Quy
+!Sadie   # split from Şadiye
+!Salla   # split from Salah
+!Salih   # split from Sally
+!Stefan Stephan Štefan Steffen Ştefan Ștefan Stefaan Stefán   # split from Stephen
+!Tai Tay   # split from Thai
+!Tham   # split from Tam
+!Thami   # split from Tammy
+!Than   # split from Tan
+!Tao   # split from Thao
+!Taavi   # split from Thavy
+!Te   # split from The
+!Ty Ti   # split from Thi
+!Thyan   # split from Tian
+!Thien   # split from Tien
+!Thin   # split from Tin
+!Tinh   # split from Thinh
+!Tiit   # split from Tith
+!Tho   # split from To
+!Tomáš Tomaš   # split from Thomas
+!Thon   # split from Ton
+!Thong   # split from Tong
+!Thu   # split from Tu
+!Thuan   # split from Tuan
+!Tuul   # split from Thul
+!Tünde   # split from Tunde
+!Tuong   # split from Thuong
+!Ullah   # split from Ullah
+!Valeh   # split from Vale
+!Vi   # split from Vy
+!Ian   # split from yan
+!Youn Yoon   # split from yun

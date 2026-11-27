@@ -13,7 +13,7 @@ An interactive table and world map for 140 countries plus the world:
 - a quiz game: 8 rounds, guess a name from its map out of four options, 10 seconds per round,
   6.25–12.5 points for a right answer, more the faster (100 max); easy / medium / hard levels
 - for each name, the 5 names with the most similar geography
-- an option to merge spelling variants (Mohammed/Muhammad/Mohamed, Sergey/Sergei, José/Jose)
+- an option to merge spelling variants (Mohammed/Muhammad/Mohamed, Jacob/Jakob/Jakub/Yakov, Monika/Monica)
 - people per name, number of distinct names, share of women in the records
 - an unweighted country average next to the population-weighted world figure
 
@@ -30,6 +30,27 @@ names split into syllables) are left out and listed on the page with the reason.
 
 People with several given names (José María, Anna Maria) count once per name, which inflates
 Spain, Italy, Portugal and Latin America somewhat.
+
+## Spelling families
+
+"Merge variants" counts spellings of the same given name together when they also sound nearly the same:
+transliterations and national spellings such as Jacob / Jakob / Jakub / Yakov, Mohammed / Muhammad / Mukhammad,
+Karl / Carl, Sergey / Serghei. It does *not* merge different-sounding cognates (John / Juan / Ivan),
+male and female forms (Daniel / Daniela), forms that gain or lose a syllable (Maria / Marie, Fatima / Fatma),
+short forms, or different East-Asian syllables (Kun / Qun, Tam / Tham).
+
+The families come from three layers, all in `build/`:
+1. `fold()`: accents stripped, ph→f, th→t, ou→u, oo→u, ee→i, y→i, doubled letters collapsed, final vowel+h dropped;
+2. `families.txt`: hand-made transliteration groups, and `!` lines that split a fold result apart again;
+3. `merges.txt`: about 1,060 further families. Candidates were all pairs of names that are phonetically equal
+   (c/k/q, w/v, z/s, kh/h, j/y…) or within one or two edits; each of the ~31,000 pairs was judged by a
+   language model against the rule above, then checked for chains of merges that would join different names.
+
+## Rebuilding
+
+`python3 build/build.py` regenerates `index.html`, `names.json`, `ni/` and `quiz.json` from
+`build/base.json` (every listed name per country with its estimated male / female bearers),
+`build/countries.json`, `build/template.html` and the family files above.
 
 ## Files
 

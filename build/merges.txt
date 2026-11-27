@@ -1,0 +1,1065 @@
+# one line per merged name family: one spelling of each sub-family; first = family id
+# kept only when the forms are the same given name AND sound nearly the same (see README)
+Abakar Babacar Abukar
+Abbas Abbos
+Abdel_Fattah Abdifatah
+Abdel_Rahman Abderrahmane Abdirahman Abdurrahman Abdulrahman Abdourahamane Abderrahman Abdourahmane
+Abdelaziz Abdul_Aziz Abdiaziz
+Abdelhak Abdelhaq
+Abdelhamid Abdul_Hamid
+Abdeljalil Abdul_Jalil
+Abdelkader Abdoulkader
+Abdelkrim Abdul_Karim Abdelkarim Abdelkerim Abdikarim
+Abdellahi Abdallahi Abdillahi
+Abdellatif Abdul_Latif
+Abdelmadjid Abdelmajid
+Abdelmalek Abdul_Malik
+Abdelouahab Abdel_Wahab Abdiwahab
+Abdelouahed Abdel_Wahid
+Abdenour Abdinoor
+Abderrazak Abdul_Razzaq Abderrezak Abdirizak Abdirisak Abdourazak
+Abdeslam Abdel_Salam Abdesselam
+Abdo Abdou
+Abdullah Abdollah
+Abid Abed
+Abigail Abigael
+Abraham Avraham Avraam
+Abubakar Aboubacar Abubaker Abubakr
+Achilleas Achillefs
+Adel Adil
+Adnan Adnane
+Adolf Adolphe Adolfas Adolfs
+Afanasyi Afanasie
+Afroditi Aphrodite
+Afsana Afsaneh
+Agostinho Agostino
+Agustin Augustine Augustin
+Agustina Augustina
+Ahimed Ahemed
+Ahmed Ahmet Achmad Akhmad Ahmat Akhmed Akhmet
+Aishatu Aichatou Aichetou
+Aissata Aisseta
+Aivars Aivar
+Akeem Hakim
+Akhlas Ekhlas
+Akila Aqila
+Akulyna Aculina
+Alan Allen
+Alaoui Alawi
+Alassane Alhassane Alhassan Alassan
+Albert Albertas Alberts
+Albina Albinas
+Aleksandr Alexandre Alyeksandr Alexandros Aleksandrs Aleksandras Alexandar
+Aleksandra Alexandra Alyeksandra Aleqsandra
+Aleksey Aleksejs
+Alex Aleks
+Alexis Aleksi Aleqsi
+Alfred Alfreds Alfredas
+Alicia Alicja
+Alick Alik
+Alisher Alishyer
+Almaz Almas
+Alois Alojz Aloyse
+Alojzija Alojzia
+Alphonse Alfons
+Amade Hamade
+Amadou Hamadou Hamado
+Amal Amel Emel
+Amath Ameth
+Amer Ameur
+Amin Amine Emin
+Aminatou Aminetou
+Amir Emir
+Amna Aemna
+Amy Amie
+Ana-Maria Anamarija
+Anastasiya Anastazia Anastasija
+Anatolyi Anatolie Anatolijs Anatolij
+Anca Anka
+Andrea Andreea Andreia Andreja
+Andrey Andryei
+Andriana Andriani
+Angela Anđela Anjela Anděla
+Angelica Angelika
+Anisa Enisa
+Anneli Annelie
+Anneliese Annelies Annelise
+Annemarie Ann-Marie
+Annet Annette
+Annie Ani
+Anton Antun Antons
+Antonia Antonija
+Anwar Anvar Anouar
+Anya Anja
+Anzhela Anxhela
+Anđa Andja
+Ari Arie
+Arif Aref
+Arifa Arife Arefa
+Arjan Arjen
+Arkadiy Arcadie
+Armand Armands
+Arnaldo Arnoldo
+Arnold Arnolds
+Arsen Arsène
+Artur Artūras Arturs
+Arvid Arvids
+Arzou Arzuw
+Asad Esad
+Ashraf Achraf
+Asma Esma Asmae
+Asmahan Ismahan
+Assane Assan
+Asseta Assata
+Astrid Astride
+Atef Atif
+Athina Athena
+Aurelia Aurelija
+Aydın Aydin
+Aynura Aynure
+Ayşe Ayshe
+Aziz Eziz
+Aïchata Aicheta Aichete
+Bahram Bakhrom Vahram
+Bakary Bacary
+Bakhodir Bahodir Bakhodur Bahodur
+Bakhtiyor Bakhtiyar Bakhtiyer Baxtiyor Baxtiyar Baktiyar
+Bakhytzhan Bakytzhan
+Baktybek Bakytbek
+Balkissa Balguissa
+Barbara Barbora
+Bartłomiej Bartlomiej
+Bashir Bachir Beshir Bechir
+Bassam Bassem
+Batol Batoul Betül
+Bayram Bajram
+Beata Beate
+Beatrice Beatrace
+Begench Begenc
+Behrooz Bekhruz Bahruz
+Bekzod Begzod
+Belkacem Belgacem
+Benjamin Binyamiyn Beniamin Venyamyn
+Berhanu Birhanu
+Bernadette Bernadett
+Bernd Bernt
+Beverly Beverley
+Bianca Bianka
+Bienvenu Bienvenue
+Biljana Bilyana
+Bilqees Bilkis Belkis Balqis Belquis
+Birger Birgir
+Birgitta Birgitte
+Birutė Biruta
+Bismark Bismarck
+Bisnu Bishnu
+Bjarne Bjarni
+Björn Bjørn
+Blanca Blanka
+Bogdan Bohdan
+Bogumiła Bohumila
+Bogusław Boguslaw Bohuslav
+Bojan Boyan
+Bonface Bornface
+Bonnie Bonny
+Boudjemaa Boujemaa
+Boukar Bocar
+Božena Bozhena
+Božidar Bozhidar
+Brahima Bréhima
+Bridget Bridgette
+Bronyslav Bronislavs
+Buddhika Buddika
+Bulat Bolat Bolot
+Bushra Bouchra Büşra
+Camelia Kameliya
+Camila Kamila
+Camilo Kamilo
+Canan Janan
+Carla Karla
+Carlo Karlo
+Carmen Karmen
+Carol Karol Carole
+Carolina Karolina
+Caroline Karoline
+Carsten Karsten
+Cathrine Katrine
+Cecilia Cecelia Secilia Sesilia
+Cengiz Çingiz Chyngyz
+Cennet Jennet
+Cesar Cezar
+Chantal Chantale
+Charalampos Charalambos
+Charikleia Chariklia
+Cheickna Cheikhna
+Cheikh Sheikh Cheick Sheik
+Choden Choten
+Christelle Christel
+Christian Cristian Krystian Krisztián Kristjan Kristijan
+Christiana Cristiana
+Christiane Cristiane
+Christoforos Christoforo
+Christophe Christoph
+Cirilo Kyrylo
+Claire Clare
+Clara Klára
+Claudia Klaudia Klaudija
+Claudio Claudiu
+Cornel Kornél
+Cornelia Kornelia
+Cosmas Kosmas
+Costas Kostas
+Coumba Koumba
+Coura Koura
+Crispin Chrispin
+Cristina Kristina Christina Krisztina Qristina
+Cyril Cyrille
+Dainius Dainis
+Daisy Deysi
+Dambar Damber
+Damian Damjan
+Danuta Danutė
+Daphney Daphne Daphnee
+Darlene Darline
+Darya Darja
+Daulet Daulat
+David Dawit Dawid Davit Davíð
+Davood Daud Davut Daut Dawood
+Deeqo Deqo
+Dejan Deyan
+Demise Demissie
+Dendup Dhendup
+Derek Derrick
+Despoina Despina
+Dewi Devi
+Dhanushka Danushka
+Diana Dijana
+Dieuveille Dieuveil
+Dieynaba Dienaba Dieneba
+Dilorom Diloram
+Dimitrije Dimitrija
+Dinesh Dines
+Djeneba Djeinaba Djenaba
+Djillali Jilali
+Djénébou Djenabou Djanabou Djeinabou
+Dolores Delores
+Dominik Dominic
+Dorcas Dorcus
+Dovlet Dowlet Davlet
+Dovran Dowran
+Dzhemal Džemal Xhemal
+Edgar Edgars Edgaras
+Editha Edite
+Edmund Edmond Edmundas Edmunds
+Eduard Eduards Eduart
+Edward Edvard
+Edwin Edvin Edvins
+Egil Egils
+Ehsan Ihsan
+Eileen Aileen
+Ekaterina Ecaterina Ekaterine Jekaterina
+El_Hacen El_Hassen El_Hassene
+El_Houssein El_Housseine
+El_Moctar El_Mokhtar
+Elaheh Ilahe
+Elena Jelena
+Eleonora Eleonore
+Elham Ilham Ilkhom Ilhom
+Elias Ilyas
+Eliecer Eliazer Eliezer Eliaser
+Elisa Eliza
+Elizabeth Elisabeth Elizaveta Elisabetta Elissavet Elisabete Elizabeta Elisaveta
+Elmar Elmars
+Elnare Elnara
+Elnure Elnura
+Elsa Elza
+Elvira Elivira Elwira
+Elóisa Eloise
+Emad Imad
+Emil Emile
+Emilia Emelia Emilija
+Emily Emilie Emelie
+Emmanuel Immanuel
+Enas Inas
+Enrique Henrique
+Eric Erick Erich Erik Eriks
+Erika Erica Ericka
+Erjon Erion
+Ernest Ernests
+Erwin Ervin
+Erzsébet Eržebet
+Eshete Eshetu
+Esmat Ismat
+Esnart Esnath
+Esperanza Esperança
+Esraa Israa
+Essam Isam
+Esther Eszter Hester
+Etienne Ettien
+Eunice Eunike
+Eva Ewa
+Evdokyia Evdoxia Evdochia Eudochia
+Evelyn Evelyne
+Everlyne Everlyn
+Evgeniy Evhenyi Yevgyenii Jevgenijs Evgheni Jevgeni Jevgenij
+Evgeniya Evhenyia Eugenia Yevgyeniya Evghenia Eugenija Yevgenia
+Ewald Evaldas Evalds
+Ewelina Evelina Ivelina
+Ezekiel Ezequiel
+Fabian Fabien
+Fabrizio Fabricio
+Fadel Fadil
+Fadila Fadhila
+Fadimatou Fatimatou
+Fadumo Fatumo
+Fadwa Fadoua
+Fahima Fahimeh
+Faisal Faycal Feysal
+Farangis Firangiz
+Fardowsa Fardoussa
+Farhad Farkhod Farhod Farkhad
+Farhat Ferhat
+Farid Ferid
+Farida Farideh Feride
+Farrukh Farruh
+Faruk Farooq
+Farzana Farzaneh Farzona
+Fati Fethi
+Fatima Fatema
+Fatima-Zahra Fatima-Ezzahra
+Fatimetou Vatimetou
+Fatmira Fatmire
+Fatoumata Fatimata Fadimata
+Federico Frederico
+Fekadu Fikadu
+Felicia Felecia
+Felipa Filipa
+Felipe Philippe
+Felix Felyks
+Feodosyia Theodosia
+Ferdinand Ferdinando
+Fikret Fikrat
+Filippo Filippos
+Firuz Feruz
+Firuza Feruza Fyeruza Firouzeh
+Flavio Flavius Flaviu
+Foteini Photini
+Fouad Foad
+Fousseyni Fousseni
+Francois Franèois
+Frank Franck
+Franz Frans Frantz Frants
+Fredrick Frederick Fredrik Frederik
+Fridah Frieda
+Fritz Frits
+Fyodor Feodor
+Gabriela Gabrijela
+Ganesh Ganes
+Gaspar Gašper
+Gavriil Havryl Gavriel
+Geanina Gianina
+Gemma Jemma
+Gennadiy Hennadyi Gyennadii Ghenadie
+Gentian Gentjan
+Georgiy Giorgio Giorgi Gheorghi
+Gerald Geraldo
+Gerardo Gerard
+Gerd Gert Geert
+Ghorban Gurban
+Ghulam Golam Gholam
+Giannis Yiannis
+Giannoula Yiannoula
+Gideon Gèdèon
+Giovanna Jovana
+Giovanni Geovanny
+Gisela Gizella
+Gisele Guiselle
+Giuliana Julijana
+Gjorgji Gjorgje Gjorgi
+Gleb Hleb
+Godelive Godelieve
+Gonzalo Gonçalo
+Govkher Gowher Govher
+Graciela Graziella
+Grażyna Grazhina
+Gregor Grigor
+Grigoriy Grigorijs
+Gudrun Guðrún
+Guillermo Guilherme
+Gulchyekhra Gulchekhra
+Gulinara Gulinora
+Gulnara Gulnora Gülnare
+Gulshan Gülşan
+Gunnar Gunars
+Gustav Gustaf
+Guvanch Guwanch
+Géza Gejza
+Hacer Hadjer
+Hagar Hager
+Haidar Heydar
+Hajrija Hajrije
+Hakima Hakimeh
+Halima Halime
+Hamadoun Hamadoum
+Hamida Hamideh
+Hamza Hamzeh
+Hanan Hanane
+Hanifa Hanife
+Hapsatou Habsatou
+Harold Harald
+Hashim Hashem
+Hassan Hassen Khasan
+Hatem Hatim
+Hauwau Haouaou Awaou Hawaou
+Hawa Haoua Hauwa Havva
+Hayat Hayet
+Heba Hiba
+Hedwig Hedvig
+Helene Eleni Elene
+Helio Elio
+Henriette Henrietta Henriett
+Herve Herv
+Hisham Hicham Hesham Hichem
+Hocine Houcine
+Hoda Houda
+Hossam Hussam
+Humberto Umberto
+Hussein Hussien Hissein Khuseyn
+Iakovos Iacovos
+Ibrahim Ibragim Ibraim
+Ibtisam Btissam
+Idris Edris
+Ignacio Ignazio
+Igor Igors
+Ijaz Ejaz
+Ikram Ikrom
+Ildar Eldar Eldor
+Ileana Iliana
+Ilmars Ilmar
+Ilnur Elnur
+Ilya Ilija
+Iman Eman Imane
+Imelda Emeldah
+Imran Emran
+Ines Inez
+Ingebjørg Ingibjörg
+Ionel Jonel
+Ioseb Iosebi
+Irade Irada
+Irakli Iraklis
+Isaac Isack Isak
+Isabel Isabelle Izabel
+Isabella Izabela
+Islam Eslam Islom
+Ismail Ismael Esmaeil Esmail
+Issiaka Issiaga
+Ivan Iwan Ivans
+Iwona Ivona
+Jackie Jacky
+Jackline Jacklyn
+Jacob Jakub Jakob Yakup Yaqoub Yakov Yaakv Yacoub Jakov Iacob
+Jacqueline Jaqueline Jacquelin
+Jadwiga Jadvyga Yadviga
+Jagadish Jagdish Jagadis
+Jahangir Jahongir
+Jamal Gamal Jemal Djamel Cemal Jemali
+Jamila Djamila Yamila Jemila
+Jamshid Jamshed
+Janina Yanina
+Janka Yanka
+Janko Yanko
+Jaroslava Yaroslava
+Jason Jayson
+Javad Jawad Jaouad
+Jeffrey Jeffery Jeffry
+Jenny Jennie
+Jerry Gerry
+Jessica Yessica
+Jessie Jessy
+Jitendra Jitendr
+Joanna Johanna Yohana
+Joaquim Joaquin
+Jocelyn Jocelyne
+Joel Yoel
+Johann Yohan
+Johannes Yohannes
+Johnny Jhonny
+Jon Jhon
+Jonas Yonas Joonas
+Jonathan Yonatan
+Jonna Yonah
+Josefina Jozefína
+Joseph Jozef József Yosef
+Josephine Josphine
+Josip Iosif Yosyp Josifs
+Josphat Josephat
+Julian Iulian
+Juliana Yuliana
+Juliet Juliette
+Jørgen Jörgen
+Kadidiatou Khadidiatou
+Kaisa Kajsa
+Kakhaber Kakhaberi
+Kalidou Khalidou
+Kalthum Keltoum
+Kamal Kemal Kamel Kamol Qemal
+Kamalesh Kamlesh
+Kamil Komil
+Kamla Kamala
+Kamogelo Kamohelo
+Karen Caren
+Karin Carin
+Karina Carina
+Karine Carine
+Karl Carl
+Kasper Casper
+Katharina Caterina Catarina
+Kathy Cathy
+Katia Katja Cátia
+Katlego Katleho
+Kausar Kawthar Kawsar Kaoutar
+Kazem Kazeem Kazım
+Kedir Kadir
+Kelly Kellie
+Ketty Kettie
+Kezang Kesang
+Khader Khadar Kadar
+Khadija Khadiza Khadijeh Hadija Khedidja Khadijo Hadidja Kadijo
+Khadra Kadra
+Khadro Qadro
+Khady Kadi
+Khairia Khairieh
+Khalid Khaled
+Khalida Khaleda
+Khalil Halil
+Khardiata Kardiatou Kardiata
+Khawla Khaoula Khoula
+Khdeija Khdeije
+Kheira Khira
+Khelifa Kalifa Khalifa
+Khoudia Khodia
+Khrystyna Hristina
+Khursheed Khurshed Hurshed
+Kinley Kinlay
+Kinzang Kuenzang Kunzang
+Kjeld Keld
+Klaus Claus
+Klavdyia Clavdia Klavdija
+Knut Knud
+Kobra Cobra
+Kodjo Kojo Codjo Koudjo
+Koffi Coffi
+Komlan Comlan
+Konstantia Constantia
+Konstantin Constantin Konstantins
+Konstantina Constantina
+Konstantinos Constantinos
+Kosal Kusal
+Kossi Cossi
+Kouakou Kwaku Kweku
+Kouame Kwame Koami Kwami
+Kouassi Kwasi Kwesi
+Kseniya Ksenija
+Kuvvat Kuwwat
+Kyriacou Kyriakou
+Kyriakos Kyriacos
+Lahcen Lahcene Lahsen
+Lakshmi Laxmi Laksmi
+Lamia Lamiae
+Lampros Lambros
+Laouali Lawali
+Latifa Latife
+Laxman Lakshman Laksman
+Lazarus Lazaros
+Lebogang Lebohang
+Leila Lila Laila
+Leon Leonas Leons
+Leonel Lionel
+Leonid Leonidas Leonids
+Leposava Ljeposava
+Leslie Lesley Lesly
+Leticia Letizia
+Leylasha Leylisha
+Liaqat Liaquat
+Libuše Libuša
+Lidia Lidija
+Lilia Lilija
+Liliana Ljiljana Liljana
+Lisa Liza
+Lisbeth Lizbeth
+Livia Livija
+Liviu Livio
+Ljubica Ľubica
+Loic Loèc Loèck
+Lorand Lóránt
+Lubna Lobna
+Luca Luka
+Lucas Lukas
+Luis Luiz
+Luisa Luiza
+Lukasz Łukasz Ukasz
+Lyuba Youba
+Lyubov Ljubov
+László Laslo
+Mabvuto Mavuto
+Mackenson Makenson
+Madeleine Madelene Madeline
+Madina Madineh Medina
+Magali Magalie
+Maggie Maguy Maggy
+Mahboubeh Mahbuba
+Mahdi Mehdi
+Mahdjouba Mahjouba
+Mahendra Mahendr
+Maher Mahir
+Mahesh Mahes
+Mahfoud Mahfoudh
+Mahmoud Mehmood Makhmud
+Maimouna Meimouna
+Majid Majed Madjid
+Maksat Maxat
+Maksim Maxim
+Malik Malick Malek
+Mamie Mamy
+Mammad Mamed
+Mamoudou Mamoutou
+Manuchehr Manuchekhr Manucher
+Manuel Manoel
+Marcel Marsel
+Marco Marko
+Marcos Markus Marcus Markos
+Margarita Margarida Marharyta
+Margrit Margriet
+Maria Marija
+Marian Marijan
+Mariana Marijana
+Maricela Marisela
+Maritza Maritsa
+Mark Marc
+Marlies Marlis
+Martins Martynas
+Maryam Mariem
+Masoud Messaoud Mesut Messoud
+Maureen Maurine
+Mauricio Maurizio
+Max Maks
+Maya Maja
+Mazen Mazin
+Małgorzata Malgorzata
+Mebarek M'Bareck
+Mebarka M'Barka M'Barcka
+Mehboob Mahbub
+Mehmet Mohmed Mehmed
+Mekhrangez Mehrangez
+Melahat Malahat
+Merab Merabi
+Merveille Merveil
+Messaouda Masouda Messouda
+Michael Micheal
+Michal Michał
+Mickael Mikael Mikayel
+Mihajlo Mihailo
+Mikel Miquel
+Mikhail Mihail Mihails
+Mikheil Mikheili
+Miloš Miłosz Milosz
+Miltiadis Miltiades
+Miriam Mirjam
+Miroslav Mirosław Miroslaw
+Mohammed Mehamed Muhammet M'Hamed Mukhammad Mahamed Mahammad Mukhammet Mukhammed
+Moharram Maharram
+Mohsen Mohsin
+Molefi Molefe
+Momina Moumina
+Monica Monika
+Monira Munira
+Morium Moriom
+Mortada Murtada
+Mukhabbat Makhabat
+Mukhtar Mokhtar Moctar Muktar Mouctar Moktar
+Munir Monir
+Murat Mourad Murod Morad
+Muriel Murielle
+Muzaffer Muzaffar
+Myakhri Mahri Myahri
+Nacera Nacira Nassira
+Nader Nodir Nadir
+Nadezhda Nadyejda Nadežda Nadejda
+Naila Nailya
+Najat Nadjet
+Najia Nadjia
+Najma Najmeh
+Najwa Najoua
+Namgyel Namgyal
+Naomi Naomie Nahomie
+Narendra Narendr
+Naresh Nares
+Nargis Narges Narjes Nargiz
+Nasiba Nasibe
+Nasreen Nesrin
+Nasser Nacer
+Natasha Nataša Natacha Natasja
+Nathalie Nataly
+Nathaniel Natanael
+Nawal Naoual Nawel
+Nazife Nazifa
+Nedeljko Nedjeljko
+Negar Nigar
+Nelly Nellie
+Nelson Nilson
+Nestor Nester
+Neusa Neuza
+Nezha Nouzha
+Nico Niko
+Nicola Nikola
+Nicolas Nicholas Nikolas
+Nicole Nikol Nicol
+Nicoleta Nikoletta
+Nigussie Niguse
+Nikita Nikitas
+Niklas Niclas
+Nikolaos Nicolaos
+Nikolay Nicolae Nicolai Nikolajs
+Nikoloz Nikolozi
+Nikos Nicos
+Nils Niels
+Nilza Nilsa
+Nodar Nodari
+Nodira Nadira
+Noorullah Nurullo
+Noureddine Nurettin Nuriddin Nooruddin
+Nourhan Norhan
+Nugzar Nugzari
+Odilia Otilia
+Oksana Oxana
+Olaf Olav
+Oleg Olyeg Olegs
+Olesya Olesea
+Olivia Oliwia
+Omar Omer Umer
+Omid Umid Ümit Umed
+Osama Samah
+Oscar Oskar Oskars Oszkár
+Osvaldo Oswaldo
+Oswald Osvalds
+Otar Otari
+Othmane Othman
+Ouahiba Wahiba
+Ouarda Warda
+Ousseini Housseini
+Ovidiu Ovidio
+Oybek Aybek
+Padraig Padraic
+Panagiota Panayiota
+Panagiotis Panayiotis
+Parahat Parakhat
+Paraskovyia Parascovia
+Pascal Paschal
+Patrick Patryk
+Pavel Pawel Paweł Pavyel Pavels
+Pelaheia Pelagia Pelaghia
+Peter Pieter Peeter
+Petronela Petronila
+Petrus Petros
+Peyman Pejman
+Phurba Phurpa
+Prakash Prakas
+Princess Princesse
+Prisca Priska
+Proscovia Praskovyia Prascovia
+Przemysław Przemyslaw
+Pushpa Puspa
+Qasim Qasem Kassim
+Qetevan Qetevani
+Qurban Kurbon
+Rabab Robab
+Rabia Rabija
+Rabiul Robiul
+Rachel Racheal Rachael
+Radosław Radoslaw Radoslav
+Rafael Rafayel
+Rafal Rafał
+Rafik Rafiq
+Raheleh Rahile Rahila
+Rahima Rahime
+Rahmat Rehmat
+Rahmatullah Rakhmatullo
+Raihan Ayhan
+Rainer Reiner
+Rajesh Rajes Rajeh
+Rajiv Rajib
+Rajmonda Raimonda
+Rakesh Rakes
+Ramadan Ramadhan
+Ramaz Ramazi
+Ramazan Ramazon
+Ramesh Rames
+Raqia Rakia
+Rashid Rachid
+Ravindra Rajendr Ravindr
+Ravshan Rövşan Rovshen Rovshan Rowshen
+Raymond Raimund Raimondas Raimundas Raimonds
+Razia Razieh Razija
+Raşad Rashad
+Rebecca Rebekka
+Recep Rejep
+Redouane Radouane
+Remigiusz Remigijus
+Renold Reynold
+Revaz Revazi
+Rhoda Rodah
+Rick Rik
+Ricky Riki
+Ridwan Ridvan
+Rinat Renat
+Risto Riste
+Robert Robertas Roberts
+Robinson Robenson
+Rodion Radion
+Rogers Rodgers
+Rokeya Rokia Rukia Rokaya Rokhaya Rekia Roukaya Ruqiya
+Roland Rolandas Rolands
+Roman Romans
+Romuald Romualdas
+Rony Ronnie
+Rosa Roza
+Rosalia Rozália Rozalija
+Roseline Rosilene Roselyn Roselene
+Rosemary Rosemarie Rosmarie Rosmery
+Roshan Rosan
+Rostyslav Rastislav
+Rowena Rovena
+Roxana Roksana
+Rozina Rojina
+Ruben Reuben
+Rudolf Rudolfs
+Rukio Ruqiyo
+Russell Rasel
+Rustam Rustem
+Rusudan Rusudani
+Saadet Saodat Sareth Saadat
+Sabina Szabina
+Sabir Saber
+Sadia Sadeya
+Sadiq Sadık Sadik
+Saeed Seid Saheed
+Safa Ouafae Safae
+Saffia Safieh Safija
+Safiata Safieta
+Safiatou Safietou
+Saidu Seydou
+Sajida Sajeda
+Sajjad Sazzad
+Sakina Sakineh
+Salamatou Salimatou Salematou
+Salim Selim
+Salma Selma
+Samat Samad
+Samson Sampson Simson
+Samsul Syamsul
+Samuel Samwel Samvel
+Sandra Szandra
+Sanguan Sangwan
+Sanjida Sanzida
+Saraswati Sarasvati
+Sardar Sardor Serdar
+Sasha Sascha Saša
+Sasho Sašo
+Sebastian Sebastjan
+Selvin Selwyn
+Seny Seyni
+Sergey Serhei Serghei
+Severin Seweryn
+Seynab Saynab
+Shadrack Shadreck Chadrack
+Shahin Şahin
+Shahnaz Shehnaz Şahnaz
+Shaimaa Chaimaa Chaimae
+Shakhnoza Shahnoza
+Shamil Şamil
+Shaukat Shavkat
+Shawn Shaun
+Shelley Shelly
+Sherif Sharif Cherif
+Shirin Shereen Sherine
+Shirley Sherly Sherley
+Shukhrat Shuhrat Shohrat Shokhrat
+Shukri Shugri Choukri
+Siavash Siyovush
+Sigurd Zigurds
+Siham Seham Sihem
+Silvia Sylwia Szilvia Silvija
+Silvio Silviu
+Simeon Simion
+Simon Saimon
+Singye Singay
+Sinuan Sinuon
+Siphiwe Sipiwe
+Siriphon Siriporn
+Sirus Cyrus
+Siva Shiva
+Slawomir Sławomir Slavomír
+Slađana Sladjana
+Snezhana Snežana Snježana
+Sofia Sofija
+Soheila Sohaila Souhila Suhaila
+Sohel Shohel
+Sokratis Socrates
+Somchit Somkhit
+Somphong Sompong
+Sonia Sonja
+Sophon Suphon
+Soteris Sotiris
+Soufiane Sofiane
+Soukaina Soukeina
+Souley Souleye
+Srjan Srđan Srdjan
+Stacy Stacey
+Stanislav Stanisław Stanislaw Stanislavs
+Steen Sten
+Stefania Štefanija
+Stefano Stefanos Stefanus
+Stelio Stelios
+Stepan Stjepan
+Stoyan Stojan
+Stoyanka Stojanka
+Stoyka Stojka
+Sukhrob Suhrob
+Suleiman Souleymane Sulaiman Suleman Solayman Sulaymon Sulejman
+Sumaiya Soumeya
+Suman Sumon
+Sumitra Sumitr
+Surayya Soraya
+Surendra Surendr
+Suresh Sures
+Susan Suzan
+Susana Suzana
+Sushil Susil
+Suzanne Susanne
+Sven Svend
+Svetlana Svyetlana
+Sylvester Sylwester Szilveszter
+Szymon Shimon
+Tadeusz Tadeáš Tadeuš
+Tahir Takhir Taher
+Tahira Tahereh Tahire
+Tahmina Takhmina
+Tamanna Tamanno
+Tamaz Tamazi
+Tania Tanja
+Taous Tavus
+Tariel Tarieli
+Tariq Tarek Tarig Tarik
+Taufik Toufik Tawfiq Tofiq
+Taysyia Taisija
+Teimuraz Teimurazi
+Tengiz Tengizi
+Teofilo Theophilus Theofilos
+Teresa Tereza
+Terézia Terezija
+Theodoros Teodoro
+Thinley Thinlay
+Tidiane Tidiani
+Timur Temur Temuri
+Tinatin Tinatini
+Todor Tudor
+Torstein Þorsteinn
+Torunn Þórunn
+Tracy Tracey
+Traian Rayan
+Ts'epang Tshephang Tshepang
+Tshepiso Ts'episo
+Tshepo Ts'epo Tshepho
+Ulugbek Ulugbyek Ulukbek
+Umida Umeda
+Usman Osman Ousmane
+Vadim Nadeem
+Vahid Waheed
+Vahideh Wahida
+Vakhtang Vakhtangi
+Valdas Valdis
+Valentin Valentins Valentinas
+Valeriu Valerio
+Valeriy Valyerii Valerijs Valerij
+Valeriya Valerija
+Vangjel Vangel
+Vania Vanja
+Vaqif Vagif
+Vatma Fatme Vatme
+Vepa Wepa
+Vera Vyera Vjera
+Veronica Veronika Weronika Veranika
+Victor Wiktor Viktors Viktoras
+Viktoriya Victoria Wiktoria Viktorija
+Vilma Wilma
+Viola Wiola
+Violeta Wioletta
+Virendra Virendr
+Virginia Virginija
+Vishnu Visnu
+Vitaliy Vitalie
+Vivian Vivien
+Vladimir Vladimirs Vladimeri Vladimiras
+Vladislav Vladislavs
+Vyacheslav Vyachyeslav
+Vytalyia Vitalija
+Wadad Widad
+Wafa Vafa Wafae
+Waldemar Valdemar
+Walter Valter
+Wanda Vanda
+Waqar Vüqar
+Wendell Vendel
+Wichit Vichet
+Wiesław Wieslaw
+Wilfredo Wilfrido
+Wilfried Wilfrid Wilfred
+Willem Vilém
+Willi Willie Villy
+William Willian Viliam
+Winfried Winfred
+Wissam Wessam
+Wolde Woldie
+Yacouba Yakouba
+Yana Jana
+Yani Jani
+Yaroslav Jaroslav Jarosław Jaroslaw
+Yasin Yassine Yacine Yacin
+Yasmin Yasmine Jasmin Yeasmin
+Yasmina Jasmina
+Yasser Yasir
+Yesenia Jessenia
+Yolanda Jolanda
+Yonten Younten
+Yordan Jordan
+Younes Yunus
+Yuliya Julija
+Yuriy Iurie
+Yusuf Yusup
+Yvette Ivett
+Zacarias Zacharias
+Zafar Zafer
+Zahra Zohra Zohreh Zehra
+Zainal Zaenal
+Zakaria Zaqaria
+Zalikha Zoulikha
+Zarifa Zarife
+Zeinabou Zainabu Zeinebou
+Zewde Zewdie
+Zhuldyz Zhyldyz
+Ziad Siyad Zijad
+Zofia Zofija
+Zoia Zoja
+Zubaida Zoubida Zübeyde
+Zubair Zoubir
+Zulfiya Zülfiyye
+Zurab Zurabi
+Zviad Zviadi
+Zynayda Zenaida
+Zynovyi Zenovyi
+Zynovyia Zenovyia
+Đuro Djuro
+Ľubomír Ljubomir Lyubomir
+Şaban Shaban
+Živka Zhivka
+Živko Zhivko

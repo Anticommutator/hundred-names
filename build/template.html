@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>The Hundred Names</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a single ranked ledger — controls on top, one wide sortable table whose cells carry their own bars */
+:root{
+  --bg:#f5f6f2; --surface:#ffffff; --fg:#1c211f; --muted:#5f6763; --line:#dde1da;
+  --accent:#0f7c66; --accent-soft:#d5ece5; --men:#2f6fb3; --women:#c2572b; --sur:#7a5bb0; --world:#1c211f;
+  --nodata:#e6e8e3; --ramp0:#eef3ef;
+  --display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --body:Inter,ui-sans-serif,system-ui,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#121614; --surface:#1a1f1c; --fg:#e7ebe8; --muted:#9aa39e; --line:#2c3430;
+  --accent:#4cc5a5; --accent-soft:#183a31; --men:#79a9e0; --women:#ec9067; --sur:#b39ae0; --world:#e7ebe8;
+  --nodata:#262d29; --ramp0:#1f2622; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#121614; --surface:#1a1f1c; --fg:#e7ebe8; --muted:#9aa39e; --line:#2c3430;
+  --accent:#4cc5a5; --accent-soft:#183a31; --men:#79a9e0; --women:#ec9067; --sur:#b39ae0; --world:#e7ebe8;
+  --nodata:#262d29; --ramp0:#1f2622; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:15px/1.55 var(--body);
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:2.5rem 4rem}
+.wrap{max-width:1080px;margin:0 auto;display:flex;flex-direction:column;gap:1.75rem}
+h1{font:700 clamp(2rem,5vw,3.2rem)/1.05 var(--display);letter-spacing:-.02em;margin:0;text-wrap:balance}
+h2{font:700 1.25rem/1.2 var(--display);margin:0 0 .5rem}
+.lede{max-width:65ch;margin:.75rem 0 0;color:var(--muted);font-size:1.05rem}
+.lede b{color:var(--fg)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi .lab{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kpi .val{font:500 1.7rem/1.2 var(--mono);font-variant-numeric:tabular-nums}
+.kpi .sub{font-size:.85rem;color:var(--muted)}
+.controls{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:end}
+.group{display:flex;flex-direction:column;gap:6px}
+.group>span{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.seg{display:flex;flex-wrap:wrap;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface)}
+.seg button{font:500 .88rem var(--body);border:0;background:transparent;color:var(--fg);padding:7px 12px;cursor:pointer;border-right:1px solid var(--line)}
+.seg button:last-child{border-right:0}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--surface)}
+.seg button:focus-visible,th button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+select{font:500 .88rem var(--body);padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--fg)}
+.tablebox{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:900px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th:nth-child(-n+2),td:nth-child(-n+2){text-align:left}
+thead th{position:sticky;top:0;background:var(--surface);z-index:1}
+th button{all:unset;cursor:pointer;font:600 .74rem var(--body);letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+th button[data-active="true"]{color:var(--accent)}
+th button::after{content:" ↕";opacity:.35}
+th button[data-dir="desc"]::after{content:" ↓";opacity:1}
+th button[data-dir="asc"]::after{content:" ↑";opacity:1}
+td.rk{color:var(--muted);font:400 .85rem var(--mono);width:2.5rem}
+td.cty{font-weight:600}
+td.cty small{display:block;font-weight:400;color:var(--muted);font-size:.76rem}
+tr.world td{background:var(--accent-soft)}
+tr.avg td{background:var(--bg);font-style:normal}
+tr.avg{cursor:default}
+tr.hl td.cty{color:var(--accent)}
+.barcell{min-width:150px}
+.bar{display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.bar .track{flex:1;height:8px;background:var(--line);border-radius:4px;overflow:hidden;min-width:70px;max-width:130px}
+.bar .fill{height:100%;border-radius:4px}
+.bar .num{font:500 .9rem var(--mono);min-width:3.4rem}
+.c-all .fill{background:var(--accent)} .c-m .fill{background:var(--men)} .c-w .fill{background:var(--women)} .c-sur .fill{background:var(--sur)}
+td.mono{font:400 .88rem var(--mono)}
+.na{color:var(--muted)}
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:24px}
+.notes p,.notes li{max-width:65ch;color:var(--muted);font-size:.92rem}
+.notes ul{padding-left:1.1rem;margin:.25rem 0}
+.notes b{color:var(--fg)}
+code{font:400 .85em var(--mono)}
+a{color:var(--accent)}
+footer{font-size:.82rem;color:var(--muted)}
+.flag{display:inline-grid;place-items:center;width:1.1em;height:1.1em;border-radius:50%;background:var(--women);color:var(--surface);font:700 .7rem var(--body);vertical-align:.15em;cursor:help}
+.mapbox{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:8px}
+#map{width:100%;height:auto;display:block}
+#map path.c{stroke:var(--surface);stroke-width:.5}
+#map{cursor:pointer}
+#map path.sphere{fill:var(--accent-soft);fill-opacity:.45;stroke:var(--line);stroke-width:1}
+#map path.sphere:hover{fill-opacity:.8}
+#map path.c:not(.has){cursor:default}
+#map path.c.has{cursor:pointer}
+#map path.c.has:hover,#map path.c.sel{stroke:var(--fg);stroke-width:1.2}
+.legend{display:flex;align-items:center;gap:10px;font:400 .8rem var(--mono);color:var(--muted);flex-wrap:wrap}
+.legend .ramp{width:200px;max-width:50vw;height:10px;border-radius:5px}
+.legend .nod{display:inline-block;width:14px;height:10px;border-radius:2px;background:var(--nodata);vertical-align:middle;margin-right:4px}
+.maptip{font-size:.85rem;min-height:1.4em;color:var(--muted)}
+.maptip b{color:var(--fg)}
+tbody tr{cursor:pointer}
+tbody tr:hover td{background:var(--accent-soft)}
+tr.open td{box-shadow:inset 0 -2px 0 var(--accent)}
+.detail{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:16px}
+.detail header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.detail h2{font-size:1.6rem;margin:0}
+.detail header p{margin:0;color:var(--muted);font-size:.9rem}
+.detail .close{font:500 .85rem var(--body);border:1px solid var(--line);background:transparent;color:var(--fg);border-radius:8px;padding:6px 12px;cursor:pointer}
+.lists{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.lists h3{font:600 .74rem var(--body);letter-spacing:.06em;text-transform:uppercase;margin:0 0 6px}
+.lists h3.m{color:var(--men)} .lists h3.w{color:var(--women)} .lists h3.a{color:var(--accent)}
+.lists ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.lists li{display:grid;grid-template-columns:1.6rem minmax(0,1fr) 4.2rem;align-items:center;gap:8px;font-size:.92rem}
+.lists li .i{font:400 .78rem var(--mono);color:var(--muted)}
+.lists li .nm{position:relative;padding:3px 6px;border-radius:4px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.lists li .nm i{position:absolute;inset:0 auto 0 0;opacity:.18;border-radius:4px}
+.lists li .nm span{position:relative}
+.lists li .p{font:500 .88rem var(--mono);text-align:right}
+.lists .m i{background:var(--men)} .lists .w i{background:var(--women)} .lists .a i{background:var(--accent)}
+.lists .foot{font-size:.8rem;color:var(--muted);margin-top:6px}
+.lists small.var{color:var(--muted);font-size:.74rem}
+.lists li .nm{cursor:pointer}
+.lists li .nm:hover span,.lists li .nm:focus-visible span{text-decoration:underline;text-underline-offset:2px}
+.lists li .nm:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+#tip{position:fixed;z-index:30;max-width:280px;background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:.82rem;box-shadow:0 6px 24px rgba(0,0,0,.14);pointer-events:none}
+#tip b{display:block;margin-bottom:4px;font-weight:600}
+#tip table{min-width:0;width:100%;border-collapse:collapse}
+#tip td{padding:1px 0;border:0;text-align:left;font:400 .8rem var(--body)}
+#tip td+td{text-align:right;font-family:var(--mono);padding-left:12px}
+#tip .hint{color:var(--muted);margin-top:4px;font-size:.75rem}
+.overlay{position:fixed;inset:0;z-index:20;background:rgba(10,14,12,.45);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;
+  padding:max(24px,env(safe-area-inset-top,0px)) max(12px,env(safe-area-inset-right,0px)) 24px max(12px,env(safe-area-inset-left,0px))}
+.modal{background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:12px;width:100%;max-width:820px;padding:20px 22px;display:flex;flex-direction:column;gap:16px}
+.modal header{display:flex;justify-content:space-between;gap:12px;align-items:baseline;flex-wrap:wrap}
+.modal h2{font-size:1.9rem;margin:0}
+.modal header p{margin:2px 0 0;color:var(--muted)}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.facts div{border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.facts .lab{font-size:.7rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.facts .val{font:500 1.25rem var(--mono)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{border:1px solid var(--line);border-radius:999px;padding:2px 10px;font-size:.84rem}
+.chips span small{color:var(--muted);font-family:var(--mono)}
+#nmap,#qmap{width:100%;height:auto;display:block}
+#qmap path{stroke:var(--surface);stroke-width:.4}
+#qmap path.sphere{fill:var(--bg);stroke:var(--line)}
+.quizbtn{align-self:flex-start;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;font:700 1.05rem var(--display);
+  background:var(--accent);color:var(--surface);border:0;border-radius:10px;padding:12px 18px;cursor:pointer}
+.quizbtn span{font:400 .85rem var(--body);opacity:.85}
+.quizbtn:hover{filter:brightness(1.08)}
+.quizbtn:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.qhead{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.qhead h2{font-size:1.5rem;margin:0}
+.score{font:500 .9rem var(--mono);color:var(--muted)}
+.score b{color:var(--fg)}
+.qprompt{margin:0;font-size:1rem}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}
+.opts button{font:600 1.05rem var(--body);padding:14px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);color:var(--fg);cursor:pointer}
+.opts button:hover:not(:disabled){border-color:var(--accent)}
+.opts button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.opts button.ok{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.opts button.bad{border-color:var(--women);color:var(--women);text-decoration:line-through}
+.opts button:disabled{cursor:default}
+.timer{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.timer i{display:block;height:100%;width:100%;background:var(--accent);border-radius:4px}
+.timer i.low{background:var(--women)}
+.tleft{font:500 .85rem var(--mono);color:var(--muted);margin-top:-10px;text-align:right}
+.startrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.go{font:600 .95rem var(--body);background:var(--accent);color:var(--surface);border:0;border-radius:8px;padding:10px 18px;cursor:pointer}
+.go:disabled{opacity:.6;cursor:default}
+.go:focus-visible{outline:2px solid var(--fg);outline-offset:2px}
+.bnote{margin:0;color:var(--muted);font-size:.85rem}
+.board{border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:8px}
+.bhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.bhead h3{margin:0;font:700 1.1rem var(--display)}
+.blist,.glog{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
+.blist li,.glog li{display:grid;grid-template-columns:2rem minmax(0,1fr) auto;gap:10px;padding:5px 8px;border-radius:6px;align-items:center}
+.blist li:nth-child(odd){background:var(--bg)}
+.blist li.me{outline:1.5px solid var(--accent)}
+.blist .r,.glog .r{font:400 .8rem var(--mono);color:var(--muted)}
+.blist .n,.glog .n{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.blist .s,.glog .s{font:600 .95rem var(--mono)}
+.glog li.ok .s{color:var(--accent)} .glog li.bad .s{color:var(--muted)}
+.saveform{display:flex;flex-direction:column;gap:6px}
+.saveform label{font-weight:600} .saveform label span{font-weight:400;color:var(--muted)}
+.saveform input{font:500 1rem var(--body);padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);color:var(--fg);min-width:0;flex:1 1 200px}
+.saveform input:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+@media (prefers-reduced-motion: reduce){.timer i{transition:none}}
+.opts button small.qsim{display:block;font:400 .75rem var(--mono);color:var(--muted);text-decoration:none;margin-top:2px}
+.nn{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:4px}
+.nn li{display:grid;grid-template-columns:minmax(0,9rem) minmax(0,1fr) 3.2rem;gap:10px;align-items:center;padding:3px 6px;border-radius:5px;cursor:pointer;font-size:.92rem}
+.nn li:hover,.nn li:focus-visible{background:var(--accent-soft);outline:none}
+.nn li .t{height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.nn li .t i{display:block;height:100%;background:var(--accent);border-radius:4px}
+.nn li .v{font:500 .86rem var(--mono);text-align:right}
+.qres{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;min-height:2.5rem}
+.qres p{margin:0}
+.qres .row{display:flex;gap:8px;flex-wrap:wrap}
+.qres button{font:500 .9rem var(--body);border-radius:8px;padding:8px 14px;cursor:pointer;border:1px solid var(--line);background:transparent;color:var(--fg)}
+.qres button.primary{background:var(--fg);color:var(--surface);border-color:var(--fg)}
+#nmap path{stroke:var(--surface);stroke-width:.4}
+#nmap path.sphere{fill:var(--bg);stroke:var(--line)}
+.rank2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.rank2 h3{font:600 .74rem var(--body);letter-spacing:.06em;text-transform:uppercase;margin:0 0 6px;color:var(--muted)}
+.rank2 ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:3px}
+.rank2 li{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center;font-size:.9rem;padding:3px 6px;border-radius:5px;cursor:pointer}
+.rank2 li:hover{background:var(--accent-soft)}
+.rank2 li .c{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rank2 li .r{font:400 .78rem var(--mono);color:var(--muted)}
+.rank2 li .v{font:500 .86rem var(--mono);text-align:right;min-width:4.5rem}
+.lists ol{max-height:none}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>The Hundred Names</h1>
+    <p class="lede">If you learned a country's <b>100 most common first names</b>, what share of its people could you call by name? In Ukraine it's more than nine in ten. Worldwide it's about one in eight. Counts come from <a href="https://forebears.io" target="_blank" rel="noopener">Forebears</a>.</p>
+  </header>
+
+  <section class="kpis" id="kpis" aria-label="Highlights"></section>
+
+  <button class="quizbtn" id="quizOpen">Play the name quiz <span>Guess a name from its map</span></button>
+
+  <section class="controls" aria-label="Table controls">
+    <div class="group"><span>Coverage of top 100</span>
+      <div class="seg" id="metric">
+        <button data-k="all" aria-pressed="true">Everyone</button>
+        <button data-k="m" aria-pressed="false">Men</button>
+        <button data-k="w" aria-pressed="false">Women</button>
+        <button data-k="sur" aria-pressed="false">Surnames</button>
+      </div>
+    </div>
+    <div class="group"><span>Spellings</span>
+      <div class="seg" id="spell">
+        <button data-k="raw" aria-pressed="true">As listed</button>
+        <button data-k="mrg" aria-pressed="false">Merge variants</button>
+      </div>
+    </div>
+    <div class="group"><span>Region</span>
+      <select id="region" aria-label="Filter by region">
+        <option value="">All regions</option><option>Europe</option><option>Asia</option><option>Africa</option><option>Americas</option><option>Oceania</option>
+      </select>
+    </div>
+  </section>
+
+  <section class="mapbox" aria-label="World map">
+    <svg id="map" viewBox="0 0 960 470" role="img" aria-label="World map coloured by top-100 coverage"></svg>
+    <div class="legend" id="legend"></div>
+    <div class="maptip" id="maptip">Hover a country for its value. Click a country, on the map or in the table, to see its top names. Click the ocean for the whole world.</div>
+  </section>
+
+  <section class="detail" id="detail" hidden aria-live="polite"></section>
+
+  <div class="tablebox">
+    <table id="tbl">
+      <thead><tr>
+        <th>#</th>
+        <th><button data-sort="n">Country</button></th>
+        <th><button data-sort="all">Top 100 · all</button></th>
+        <th><button data-sort="m">Men</button></th>
+        <th><button data-sort="w">Women</button></th>
+        <th><button data-sort="t10">Top 10</button></th>
+        <th><button data-sort="topp">#1 name</button></th>
+        <th><button data-sort="sur">Top 100 surnames</button></th>
+        <th><button data-sort="ppn">People per name</button></th>
+        <th><button data-sort="u">Distinct names</button></th>
+        <th><button data-sort="fs">Women in records</button></th>
+        <th><button data-sort="pop">Records</button></th>
+      </tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <section class="notes">
+    <div>
+      <h2>How it's computed</h2>
+      <p><b>Top 100 · all</b> is the summed count of a country's 100 most frequent forenames, divided by Forebears' own total for that country (distinct forenames × people per name).</p>
+      <p><b>Men / Women</b> use each gender's own top 100. Forebears gives each name a gender percentage but not which gender it refers to, so the majority gender was assigned by name knowledge in the country's context (Andrea is male in Italy, female in Germany). Each gender's top 100 is then divided by that gender's share of the records. These columns run higher than "all" because together they cover about 200 distinct names.</p>
+      <p><b>Women in records</b> is the share of the top 300 names that are female. Values far from 50% (Nigeria, Pakistan) show who appears in Forebears' sources, not the real population.</p>
+      <p><b>Merge variants</b> counts different spellings of one name together: accents and capitals are ignored, double letters, <i>y/i</i>, <i>ph/f</i>, <i>th/t</i>, <i>ou/u</i> and a final <i>h</i> are folded (Ana/Anna, Sarah/Sara), and a list of common transliterations is joined (Mohammed/Muhammad/Mohamed/Mohammad, Sergey/Sergei, Youssef/Yusuf, Fatima/Fatma). Different forms of a name in different languages (Mary/Maria/Marie, Mehmet/Mohammed) stay separate. Only the top 250–300 names per country were available, so rarer spellings outside that range are not added. Surnames are not merged.</p>
+      <p><b>Surnames</b> is the same calculation applied to family names. Vietnam and China are the extreme cases (Nguyễn, Wang/Li/Zhang).</p>
+    </div>
+    <div>
+      <h2>Caveats</h2>
+      <ul>
+        <li>People with several given names (José María, Anna Maria) are counted once per name, which pushes up Spain, Italy, Portugal and Latin America.</li>
+        <li>Titles and non-names were removed before ranking, for example China's <i>Nushi</i> (Ms.) and <i>Laoshi</i> (teacher), Pakistan's <i>Masmaat</i> (Mrs.), India's <i>Sri/Smt</i>, and Egypt's <i>Abo/Om</i> (father/mother of). Hover a country to see what was removed.</li>
+        <li><b>England</b> stands in for the UK. Forebears' UK page is empty.</li>
+        <li>Countries with a data-quality note are marked <span class="flag">!</span>. Click a country to read its note.</li>
+        <li>For some countries Forebears lists fewer than 250 names, so the men and women columns there may come out slightly low.</li>
+        <li>The World row has no gender split because Forebears' world page has no gender column.</li>
+        <li><b>Left out</b> (grey on the map): <span id="excl"></span></li>
+      </ul>
+    </div>
+  </section>
+  <div class="overlay" id="quizOv" hidden><div class="modal" id="quizBox" role="dialog" aria-modal="true" aria-labelledby="qzTitle"></div></div>
+  <div id="tip" hidden></div>
+  <div class="overlay" id="overlay" hidden><div class="modal" id="namebox" role="dialog" aria-modal="true" aria-labelledby="nbTitle"></div></div>
+  <footer>Data: forebears.io forename and surname rankings per country, retrieved November 2026. Shares are of the people Forebears has records for.</footer>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+const DATA = __DATA__;
+let mode = 'raw', topN = 10, NAMES = null;
+const applyMode = () => { for (const d of DATA) Object.assign(d, d[mode]); };
+applyMode();
+const namesReady = fetch('names.json').then(r => r.json()).then(j => (NAMES = j)).catch(() => null);
+const EXCL = __EXCL__;
+document.getElementById('excl').textContent = EXCL.map(([n, r]) => `${n} (${r})`).join('; ') + '.';
+const tbody = document.querySelector('#tbl tbody');
+let sortKey = 'all', dir = 'desc', metric = 'all', region = '';
+const fmt = n => n.toLocaleString('en-US');
+const big = n => n >= 1e9 ? (n/1e9).toFixed(2)+' bn' : n >= 1e6 ? (n/1e6).toFixed(1)+' M' : fmt(n);
+function bar(v, cls){
+  if (v == null) return `<td class="barcell"><span class="na">—</span></td>`;
+  return `<td class="barcell c-${cls}"><div class="bar"><div class="track"><div class="fill" style="width:${Math.min(v,100)}%"></div></div><span class="num">${v.toFixed(1)}%</span></div></td>`;
+}
+function render(){
+  const rows = DATA.filter(d => d.s === 'earth' || !region || d.r === region);
+  const cs = rows.filter(d => d.s !== 'earth');
+  const mean = k => { const v = cs.map(d => d[k]).filter(x => x != null); return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null; };
+  const avg = {s: 'avg', n: 'Country average', r: `Unweighted mean of ${cs.length} ${region ? region + ' ' : ''}countries`, ex: []};
+  for (const k of ['all', 'm', 'w', 't10', 'topp', 'sur', 'ppn', 'u', 'fs', 'pop']) avg[k] = mean(k);
+  rows.push(avg);
+  rows.sort((a,b) => {
+    let x = a[sortKey], y = b[sortKey];
+    if (sortKey === 'n') return dir === 'asc' ? x.localeCompare(y) : y.localeCompare(x);
+    if (x == null) return 1; if (y == null) return -1;
+    return dir === 'asc' ? x - y : y - x;
+  });
+  let rank = 0;
+  tbody.innerHTML = rows.map(d => {
+    if (d.s === 'avg') return `<tr class="world avg">
+      <td class="rk">—</td>
+      <td class="cty">${d.n}<small>${d.r}</small></td>
+      ${bar(d.all,'all')}${bar(d.m,'m')}${bar(d.w,'w')}
+      <td class="mono">${d.t10.toFixed(1)}%</td>
+      <td class="mono"><span class="na">#1 avg ${d.topp.toFixed(1)}%</span></td>
+      ${bar(d.sur,'sur')}
+      <td class="mono">${fmt(Math.round(d.ppn))}</td>
+      <td class="mono">${fmt(Math.round(d.u))}</td>
+      <td class="mono">${Math.round(d.fs)}%</td>
+      <td class="mono">${big(Math.round(d.pop))}</td></tr>`;
+    const w = d.s === 'earth';
+    if (!w) rank++;
+    const ex = d.ex.length ? `Removed as non-names: ${d.ex.join(', ')}` : '';
+    return `<tr data-s="${d.s}" tabindex="0" class="${w?'world':''} ${['italy','switzerland'].includes(d.s)?'hl':''} ${d.s===openSlug?'open':''}" title="${ex}">
+      <td class="rk">${w?'—':rank}</td>
+      <td class="cty">${d.n}${d.flag?` <span class="flag" title="${d.flag}">!</span>`:''}<small>${d.r}${d.tm?` · ${d.tm} / ${d.tw}`:''}</small></td>
+      ${bar(d.all,'all')}${bar(d.m,'m')}${bar(d.w,'w')}
+      <td class="mono">${d.t10.toFixed(1)}%</td>
+      <td class="mono">${d.top} <span class="na">${d.topp.toFixed(1)}%</span></td>
+      ${bar(d.sur,'sur')}
+      <td class="mono">${fmt(d.ppn)}</td>
+      <td class="mono">${fmt(d.u)}</td>
+      <td class="mono">${d.fs==null?'<span class="na">—</span>':d.fs+'%'}</td>
+      <td class="mono">${big(d.pop)}</td></tr>`;
+  }).join('');
+  document.querySelectorAll('th button').forEach(b => {
+    const on = b.dataset.sort === sortKey;
+    b.dataset.active = on; b.dataset.dir = on ? dir : '';
+  });
+}
+document.querySelectorAll('th button').forEach(b => b.addEventListener('click', () => {
+  const k = b.dataset.sort;
+  if (k === sortKey) dir = dir === 'desc' ? 'asc' : 'desc';
+  else { sortKey = k; dir = k === 'n' ? 'asc' : 'desc'; }
+  metric = ['all','m','w','sur'].includes(k) ? k : metric;
+  syncSeg(); render(); paintMap();
+}));
+let openSlug = null;
+tbody.addEventListener('click', e => { const tr = e.target.closest('tr[data-s]'); if (tr) openDetail(tr.dataset.s); });
+tbody.addEventListener('keydown', e => { if (e.key === 'Enter') { const tr = e.target.closest('tr'); if (tr) openDetail(tr.dataset.s); } });
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const pfmt = p => p >= 1 ? p.toFixed(1) + '%' : p.toFixed(2) + '%';
+let LISTCACHE = {};
+function list(title, cls, items, note){
+  const max = Math.max(...items.map(x => x[1]));
+  return `<div><h3 class="${cls}">${title}</h3><ol class="${cls}">${items.map(([n,p,k,sp],i) => {
+    const id = `${cls}:${i}`; LISTCACHE[id] = {n, p, k, sp, g: cls};
+    const others = sp ? sp.length - 1 : 0;
+    const badge = mode === 'mrg' && others ? ` <small class="var">+${others === 1 ? esc(sp.find(x => x[0] !== n)?.[0] || '') : others + ' spellings'}</small>` : '';
+    return `<li><span class="i">${i+1}</span><span class="nm" tabindex="0" role="button" data-id="${id}"><i style="width:${(p/max*100).toFixed(0)}%"></i><span>${esc(n)}${badge}</span></span><span class="p">${pfmt(p)}</span></li>`;
+  }).join('')}</ol>
+    ${note?`<div class="foot">${note}</div>`:''}</div>`;
+}
+// --- hover: spellings ---
+const tipEl = document.getElementById('tip');
+function showTip(e, it){
+  const who = it.g === 'm' ? 'men' : it.g === 'w' ? 'women' : 'all records';
+  let h;
+  if (it.sp) {
+    h = `<b>${mode === 'mrg' ? 'Spellings counted together' : 'Spellings of this name here'}</b><table>${it.sp.map(([n, p]) => `<tr><td>${esc(n)}${mode === 'raw' && n === it.n ? ' ·' : ''}</td><td>${pfmt(p)}</td></tr>`).join('')}</table><div class="hint">% of ${who} · click for details</div>`;
+  } else {
+    h = `<b>${esc(it.n)}</b><div>No other spelling among the top names here.</div><div class="hint">${pfmt(it.p)} of ${who} · click for details</div>`;
+  }
+  tipEl.innerHTML = h; tipEl.hidden = false; moveTip(e);
+}
+function moveTip(e){
+  const r = tipEl.getBoundingClientRect();
+  let x = (e.clientX ?? 0) + 14, y = (e.clientY ?? 0) + 14;
+  if (e.type === 'focusin') { const b = e.target.getBoundingClientRect(); x = b.left; y = b.bottom + 6; }
+  if (x + r.width > innerWidth - 8) x = innerWidth - r.width - 8;
+  if (y + r.height > innerHeight - 8) y = (e.clientY ?? y) - r.height - 12;
+  tipEl.style.left = Math.max(8, x) + 'px'; tipEl.style.top = Math.max(8, y) + 'px';
+}
+const detailEl = document.getElementById('detail');
+detailEl.addEventListener('mouseover', e => { const t = e.target.closest('.nm'); if (t) showTip(e, LISTCACHE[t.dataset.id]); });
+detailEl.addEventListener('mousemove', e => { if (!tipEl.hidden && e.target.closest('.nm')) moveTip(e); });
+detailEl.addEventListener('mouseout', e => { if (e.target.closest('.nm') && !e.relatedTarget?.closest?.('.nm')) tipEl.hidden = true; });
+detailEl.addEventListener('focusin', e => { const t = e.target.closest('.nm'); if (t) showTip(e, LISTCACHE[t.dataset.id]); });
+detailEl.addEventListener('focusout', () => { tipEl.hidden = true; });
+detailEl.addEventListener('click', e => { const t = e.target.closest('.nm'); if (t) { tipEl.hidden = true; openName(LISTCACHE[t.dataset.id]); } });
+detailEl.addEventListener('keydown', e => { const t = e.target.closest('.nm'); if (t && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); tipEl.hidden = true; openName(LISTCACHE[t.dataset.id]); } });
+
+// --- quiz game: 8 rounds, 10 s each, up to 12.5 points per round ---
+const quizOv = document.getElementById('quizOv'), quizBox = document.getElementById('quizBox');
+let QUIZ = null, qRecent = [];
+const ROUNDS = 8, SECS = 10, PER = 12.5;
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const r1 = x => Math.round(x * 10) / 10;
+let G = null, tick = null;   // current game
+function stopTimer(){ if (tick) cancelAnimationFrame(tick); tick = null; }
+function closeQuiz(){ stopTimer(); G = null; quizOv.hidden = true; document.body.style.overflow = ''; document.getElementById('quizOpen').focus(); }
+quizOv.addEventListener('click', e => { if (e.target === quizOv) closeQuiz(); });
+addEventListener('keydown', e => {
+  if (quizOv.hidden) return;
+  if (e.key === 'Escape') closeQuiz();
+  if (e.target.tagName === 'INPUT') return;
+  const n = +e.key; if (n >= 1 && n <= 4) quizBox.querySelectorAll('.opts button')[n - 1]?.click();
+});
+document.getElementById('quizOpen').addEventListener('click', async () => {
+  quizOv.hidden = false; document.body.style.overflow = 'hidden';
+  if (!QUIZ) { quizBox.innerHTML = '<p>Loading names…</p>'; QUIZ = await fetch('quiz.json').then(r => r.json()).catch(() => null); }
+  if (!QUIZ) { quizBox.innerHTML = '<p>The quiz could not load.</p>'; return; }
+  quizStart();
+});
+// Difficulty: every wrong option is at least x away from the answer (Euclidean distance between the
+// L2-normalised vectors of square-rooted country shares, 0 = identical map, √2 = no overlap).
+const LEVELS = {easy: {x: 1.3, label: 'Easy'}, medium: {x: 0.9, label: 'Medium'}, hard: {x: 0.35, label: 'Hard'}};
+let qLevel = 'medium';
+try { qLevel = localStorage.getItem('hn-level') || 'medium'; if (!LEVELS[qLevel]) qLevel = 'medium'; } catch (e) {}
+const qNorm = p => p._u || (p._u = (() => { const r = Object.values(p.v).map(Math.sqrt); const n = Math.hypot(...r); const u = {}; for (const k in p.v) u[k] = Math.sqrt(p.v[k]) / n; return u; })());
+const qDist = (a, b) => { const ua = qNorm(a), ub = qNorm(b); let d = 0; for (const k in ua) if (ub[k]) d += ua[k] * ub[k]; return Math.sqrt(Math.max(0, 2 - 2 * d)); };
+const simPct = d => Math.round(Math.max(0, 1 - d * d / 2) * 100);
+// The range [x, √2] is cut into three equal distance bands; one wrong option comes from each:
+// a likely contender (closest band), a medium one and an unlikely one. Empty band → closest unused name above x.
+function pickDistractors(ans, lvl){
+  const x = LEVELS[lvl].x, top = Math.SQRT2 + 1e-9, w = (top - x) / 3;
+  const c = QUIZ.filter(p => p.k !== ans.k).map(p => ({p, d: qDist(ans, p)})).filter(o => o.d >= x).sort((a, b) => a.d - b.d);
+  const used = new Set(), out = [];
+  for (let b = 0; b < 3; b++) {
+    const band = c.filter(o => o.d >= x + b * w && o.d < x + (b + 1) * w && !used.has(o.p.k));
+    const o = band.length ? band[Math.floor(Math.random() * band.length)] : c.find(o => !used.has(o.p.k));
+    if (o) { used.add(o.p.k); out.push(o); }
+  }
+  return out;
+}
+
+// ---- screens ----
+function quizStart(){
+  stopTimer(); G = null;
+  quizBox.innerHTML = `
+    <div class="qhead"><h2 id="qzTitle">Name quiz</h2><button class="close" id="qClose">Close</button></div>
+    <p class="qprompt">You see a map of where one name is common. Pick the right name out of four. ${ROUNDS} rounds, ${SECS} seconds each.
+      A right answer scores between ${PER / 2} and ${PER} points, more the faster you are; a wrong answer or running out of time scores 0. The maximum is 100.</p>
+    <div class="startrow"><div class="seg" id="qLevel" role="group" aria-label="Difficulty">${Object.entries(LEVELS).map(([k, l]) => `<button data-l="${k}" aria-pressed="${k === qLevel}">${l.label}</button>`).join('')}</div>
+      <button class="go" id="qGo">Start game</button></div>
+    <p class="bnote">Easy: the wrong names come from other parts of the world. Hard: one of them has a very similar map.</p>`;
+  document.getElementById('qClose').onclick = closeQuiz;
+  quizBox.querySelectorAll('#qLevel button').forEach(b => b.onclick = () => {
+    qLevel = b.dataset.l; try { localStorage.setItem('hn-level', qLevel); } catch (e) {}
+    quizBox.querySelectorAll('#qLevel button').forEach(x => x.setAttribute('aria-pressed', x.dataset.l === qLevel));
+  });
+  document.getElementById('qGo').onclick = () => { G = {level: qLevel, round: 0, total: 0, log: []}; quizRound(); };
+  document.getElementById('qGo').focus();
+}
+function quizRound(){
+  stopTimer();
+  const cand = QUIZ.filter(p => !qRecent.includes(p.k));
+  const ans = cand[Math.floor(Math.random() * cand.length)];
+  qRecent = [ans.k, ...qRecent].slice(0, 40);
+  const dis = pickDistractors(ans, G.level);
+  const dmap = {}; for (const o of dis) dmap[o.p.k] = o.d;
+  const opts = shuffle([ans, ...dis.map(o => o.p)]);
+  G.round++;
+  quizBox.innerHTML = `
+    <div class="qhead"><h2 id="qzTitle">Round ${G.round} of ${ROUNDS}</h2>
+      <div style="display:flex;gap:12px;align-items:center"><span class="score">${LEVELS[G.level].label} · <b>${G.total.toFixed(1)}</b> pts</span><button class="close" id="qClose">Quit</button></div></div>
+    <div class="timer" aria-hidden="true"><i id="qBar"></i></div>
+    <div class="tleft" id="qLeft">${SECS.toFixed(1)} s</div>
+    <svg id="qmap" viewBox="0 0 960 470" role="img" aria-label="Quiz map"></svg>
+    <div class="legend" id="qlegend"></div>
+    <div class="opts">${opts.map((o, i) => `<button data-k="${o.k}"><span class="na" style="font:400 .75rem var(--mono);margin-right:6px">${i + 1}</span>${esc(o.n)}</button>`).join('')}</div>
+    <div class="qres" id="qres"><p style="color:var(--muted);font-size:.85rem;margin:0">Share of people carrying the name, all spellings combined. Press 1–4 or click.</p></div>`;
+  document.getElementById('qClose').onclick = () => { stopTimer(); quizStart(); };
+  const mx = Math.max(...Object.values(ans.v));
+  const interp = d3.interpolateRgb(css('--ramp0'), css('--accent'));
+  if (FEATS) {
+    const svg = d3.select('#qmap');
+    svg.append('path').datum({type: 'Sphere'}).attr('class', 'sphere').attr('d', PATH);
+    svg.selectAll('path.c').data(FEATS).join('path').attr('class', 'c').attr('d', PATH)
+      .attr('fill', f => ans.v[f.id] != null ? interp(Math.sqrt(ans.v[f.id] / mx)) : (byIso[f.id] ? css('--ramp0') : css('--nodata')))
+      .append('title').text(f => byIso[f.id] ? `${f.properties.name}: ${ans.v[f.id] != null ? pfmt(ans.v[f.id]) : 'below the top names'}` : `${f.properties.name}: no data`);
+  }
+  document.getElementById('qlegend').innerHTML = `<span>Share of people</span><span>0%</span><span class="ramp" style="background:linear-gradient(90deg,${interp(0)},${interp(1)})"></span><span>${pfmt(mx)}</span><span><span class="nod"></span>no data</span>`;
+  let done = false;
+  const t0 = performance.now(), bar = document.getElementById('qBar'), left = document.getElementById('qLeft');
+  const finish = (picked) => {
+    if (done) return; done = true; stopTimer();
+    const rem = Math.max(0, SECS - (performance.now() - t0) / 1000);
+    const right = picked === ans.k;
+    // linear from 12.5 (instant) down to 6.25 (last moment), rounded up to 0.1
+    const pts = right ? Math.min(PER, Math.ceil((PER / 2 + PER / 2 * rem / SECS) * 10 - 1e-9) / 10) : 0;
+    G.total = r1(G.total + pts);
+    G.log.push({n: ans.n, k: ans.k, right, pts, timeout: picked == null});
+    quizBox.querySelectorAll('.opts button').forEach(x => {
+      x.disabled = true;
+      if (x.dataset.k === ans.k) x.classList.add('ok');
+      else { if (x.dataset.k === picked) x.classList.add('bad'); x.insertAdjacentHTML('beforeend', `<small class="qsim">${simPct(dmap[x.dataset.k])}% similar map</small>`); }
+    });
+    const topC = Object.entries(ans.v).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([iso, p]) => `${esc(byIso[iso]?.n || iso)} ${pfmt(p)}`).join(', ');
+    const head = picked == null ? `<b>Time’s up.</b> It was <b>${esc(ans.n)}</b>.` : right ? `<b>Correct! +${pts.toFixed(1)}</b>` : `<b>Not quite.</b> It was <b>${esc(ans.n)}</b>.`;
+    const last = G.round >= ROUNDS;
+    const spl = ans.sp && ans.sp.length ? ` Spellings counted together: <b>${esc(ans.n)}</b>, ${ans.sp.map(esc).join(', ')}.` : '';
+    document.getElementById('qres').innerHTML = `<p>${head} Highest in ${topC}.${spl}</p>
+      <div class="row"><button class="primary" id="qNext">${last ? 'See your score →' : 'Next round →'}</button></div>`;
+    quizBox.querySelector('.score').innerHTML = `${LEVELS[G.level].label} · <b>${G.total.toFixed(1)}</b> pts`;
+    document.getElementById('qNext').onclick = last ? quizEnd : quizRound;
+    document.getElementById('qNext').focus();
+  };
+  const step = () => {
+    const el = (performance.now() - t0) / 1000, rem = Math.max(0, SECS - el);
+    bar.style.width = (rem / SECS * 100) + '%';
+    bar.classList.toggle('low', rem < 3);
+    left.textContent = rem.toFixed(1) + ' s';
+    if (rem <= 0) { finish(null); return; }
+    tick = requestAnimationFrame(step);
+  };
+  tick = requestAnimationFrame(step);
+  quizBox.querySelectorAll('.opts button').forEach(b => b.onclick = () => finish(b.dataset.k));
+}
+function quizEnd(){
+  stopTimer();
+  const g = G;
+  quizBox.innerHTML = `
+    <div class="qhead"><h2 id="qzTitle">${g.total.toFixed(1)} <span style="font-size:1rem;color:var(--muted)">/ 100</span></h2><button class="close" id="qClose">Close</button></div>
+    <p class="qprompt">${LEVELS[g.level].label} · ${g.log.filter(r => r.right).length} of ${ROUNDS} right</p>
+    <ol class="glog">${g.log.map((r, i) => `<li class="${r.right ? 'ok' : 'bad'}"><span class="r">${i + 1}</span><span class="n">${esc(r.n)}</span><span class="s">${r.right ? '+' + r.pts.toFixed(1) : r.timeout ? 'time' : '0'}</span></li>`).join('')}</ol>
+    <div class="startrow"><button class="go" id="qAgain">Play again</button></div>`;
+  document.getElementById('qClose').onclick = closeQuiz;
+  document.getElementById('qAgain').onclick = quizStart;
+  document.getElementById('qAgain').focus();
+}
+
+// --- name panel ---
+const SHARDS = {};
+const shardOf = k => /^[a-z]/.test(k) ? k[0] : '_';
+async function loadKey(k){
+  const c = shardOf(k);
+  if (!SHARDS[c]) SHARDS[c] = fetch(`ni/${c}.json`).then(r => r.json()).catch(() => ({}));
+  return (await SHARDS[c])[k];
+}
+const byS = {}; for (const d of DATA) byS[d.s] = d;
+const overlay = document.getElementById('overlay'), box = document.getElementById('namebox');
+let lastFocus = null;
+function closeName(){ overlay.hidden = true; document.body.style.overflow = ''; lastFocus?.focus?.(); }
+overlay.addEventListener('click', e => { if (e.target === overlay) closeName(); });
+addEventListener('keydown', e => { if (e.key === 'Escape' && !overlay.hidden) closeName(); });
+async function openName(it){
+  lastFocus = document.activeElement;
+  overlay.hidden = false; document.body.style.overflow = 'hidden';
+  box.innerHTML = `<p>Loading ${esc(it.n)}…</p>`;
+  const ent = await loadKey(it.k);
+  if (!ent) { box.innerHTML = `<header><h2 id="nbTitle">${esc(it.n)}</h2><button class="close" id="nbClose">Close</button></header><p>No cross-country data for this name.</p>`; document.getElementById('nbClose').onclick = closeName; return; }
+  const all = ent[mode].filter(e => mode === 'mrg' || e[2] === it.n);
+  const world = all.filter(e => e[0] === 'earth');
+  const rows = all.filter(e => e[0] !== 'earth' && byS[e[0]]);
+  const sumG = g => rows.filter(e => e[1] === g).reduce((t, e) => t + e[5], 0);
+  const cm = sumG('m'), cw = sumG('w'), tot = cm + cw;
+  const g = cw > cm ? 'w' : 'm';
+  const gRows = rows.filter(e => e[1] === g);
+  const top100 = new Set(rows.filter(e => e[3] <= 100).map(e => e[0])).size;
+  const per = {}; for (const e of rows) per[e[0]] = (per[e[0]] || 0) + e[5];
+  const byShare = [...gRows].sort((a, b) => b[4] - a[4]).slice(0, 12);
+  const byCount = Object.entries(per).sort((a, b) => b[1] - a[1]).slice(0, 12);
+  const sp = mode === 'mrg' ? ent.sp : ent.sp.filter(([n]) => n === it.n);
+  const otherSp = mode === 'raw' ? ent.sp.filter(([n]) => n !== it.n) : [];
+  const gword = g === 'm' ? 'men' : 'women';
+  const sexLine = tot ? (cm && cw ? `${Math.round(Math.max(cm, cw) / tot * 100)}% ${cw > cm ? 'female' : 'male'}` : (cw ? 'female' : 'male')) : '';
+  const w = world[0];
+  const num = n => n >= 1e6 ? (n / 1e6).toFixed(1) + ' M' : n >= 1e3 ? Math.round(n / 1e3) + 'k' : String(n);
+  const cname = s => byS[s].n;
+  box.innerHTML = `
+    <header><div><h2 id="nbTitle">${esc(mode === 'mrg' ? (ent.sp[0]?.[0] || it.n) : it.n)}</h2><p>${sexLine}${mode === 'mrg' && ent.sp.length > 1 ? ' · all spellings combined' : ''}</p></div>
+      <button class="close" id="nbClose">Close</button></header>
+    <div class="facts">
+      <div><div class="lab">Bearers in these countries</div><div class="val">${num(tot)}</div></div>
+      <div><div class="lab">Top-100 name in</div><div class="val">${top100} ${top100 === 1 ? 'country' : 'countries'}</div></div>
+      <div><div class="lab">World rank</div><div class="val">${w ? '#' + w[3] : '—'}</div></div>
+      <div><div class="lab">Highest share</div><div class="val">${byShare[0] ? pfmt(byShare[0][4]) : '—'}</div></div>
+    </div>
+    ${sp.length > 1 || otherSp.length ? `<div><h3 class="lab" style="font:600 .74rem var(--body);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 6px">${mode === 'mrg' ? 'Spellings included' : 'Other spellings (switch on “Merge variants” to combine them)'}</h3>
+      <div class="chips">${(mode === 'mrg' ? sp : otherSp).slice(0, 16).map(([n, c]) => `<span>${esc(n)} <small>${num(c)}</small></span>`).join('')}</div></div>` : ''}
+    <svg id="nmap" viewBox="0 0 960 470" role="img" aria-label="Map of the share of ${gword} named ${esc(it.n)}"></svg>
+    <div class="legend" id="nlegend"></div>
+    ${ent.nn?.length ? `<div class="rank2" style="grid-template-columns:1fr"><div><h3>Names with the most similar geography</h3>
+      <ol class="nn">${ent.nn.map(([k, n, d]) => `<li tabindex="0" role="button" data-k="${k}" data-n="${esc(n)}" title="Distance ${d.toFixed(2)} (0 = identical map, 1.41 = no overlap)"><span class="c">${esc(n)}</span><span class="t"><i style="width:${simPct(d)}%"></i></span><span class="v">${simPct(d)}%</span></li>`).join('')}</ol>
+      <p class="foot" style="margin:6px 0 0;color:var(--muted);font-size:.8rem">Similarity compares where each name is common: the share of people carrying it in every country (all spellings, both sexes), square-rooted so one stronghold country doesn't dominate, as a normalised vector. 100% means the same map.</p></div></div>` : ''}
+    <div class="rank2">
+      <div><h3>Highest share of ${gword}</h3><ol>${byShare.map(e => `<li data-s="${e[0]}"><span class="c">${esc(cname(e[0]))}</span><span class="r">#${e[3]}</span><span class="v">${pfmt(e[4])}</span></li>`).join('')}</ol></div>
+      <div><h3>Most people</h3><ol>${byCount.map(([s, c]) => `<li data-s="${s}"><span class="c">${esc(cname(s))}</span><span class="r">${per[s] && tot ? Math.round(c / tot * 100) + '%' : ''}</span><span class="v">${num(c)}</span></li>`).join('')}</ol></div>
+    </div>
+    <p class="foot" style="margin:0;color:var(--muted);font-size:.8rem">Counts cover the top 250–300 names of each of the ${DATA.length - 1} countries in this dataset, so the name may also occur in countries not listed here. "#" is the name's rank among ${gword} in that country.</p>`;
+  document.getElementById('nbClose').onclick = closeName;
+  document.getElementById('nbClose').focus();
+  box.querySelectorAll('.rank2 li[data-s]').forEach(li => li.onclick = () => { closeName(); openDetail(li.dataset.s); });
+  box.querySelectorAll('.nn li').forEach(li => {
+    const go = () => openName({n: li.dataset.n, k: li.dataset.k});
+    li.onclick = go; li.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } };
+  });
+  box.scrollTop = 0; overlay.scrollTop = 0;
+  // map
+  if (FEATS) {
+    const vals = {}; for (const e of gRows) vals[byS[e[0]].iso] = e[4];
+    const mx = Math.max(...Object.values(vals), 0.01);
+    const interp = d3.interpolateRgb(css('--ramp0'), css(g === 'm' ? '--men' : '--women'));
+    const svg = d3.select('#nmap');
+    svg.append('path').datum({type: 'Sphere'}).attr('class', 'sphere').attr('d', PATH);
+    svg.selectAll('path.c').data(FEATS).join('path').attr('class', 'c').attr('d', PATH)
+      .attr('fill', f => vals[f.id] != null ? interp(Math.sqrt(vals[f.id] / mx)) : (byIso[f.id] ? css('--ramp0') : css('--nodata')))
+      .append('title').text(f => `${f.properties.name}: ${vals[f.id] != null ? pfmt(vals[f.id]) + ' of ' + gword : byIso[f.id] ? 'not among the top names' : 'no data'}`);
+    document.getElementById('nlegend').innerHTML = `<span>Share of ${gword}</span><span>0%</span><span class="ramp" style="background:linear-gradient(90deg,${interp(0)},${interp(1)})"></span><span>${pfmt(mx)}</span>`;
+  }
+}
+async function openDetail(s, scroll = true){
+  const d = DATA.find(x => x.s === s); if (!d) return;
+  openSlug = s;
+  const el = document.getElementById('detail');
+  if (!NAMES) { el.hidden = false; el.innerHTML = '<p>Loading names…</p>'; await namesReady; }
+  if (!NAMES) { el.innerHTML = '<p>The name lists could not load. The table still has every value.</p>'; return; }
+  if (openSlug !== s) return;
+  const L = NAMES[s][mode];
+  const sum = a => a.reduce((t,x) => t + x[1], 0).toFixed(1);
+  const cut = a => a.slice(0, topN);
+  const word = n => n === 10 ? 'These 10' : `These ${n}`;
+  const nsel = `<div class="seg" id="topn" role="group" aria-label="How many names">${[10,25,50,100].map(n => `<button data-n="${n}" aria-pressed="${n===topN}">Top ${n}</button>`).join('')}</div>`;
+  el.innerHTML = `<header><div><h2>${d.n}</h2><p>Top 100 cover ${d.all.toFixed(1)}% of everyone${d.m!=null?` · ${d.m.toFixed(1)}% of men · ${d.w.toFixed(1)}% of women`:''}${mode==='mrg'?' · spelling variants merged':''}</p></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">${nsel}<button class="close" id="closeDetail">Close</button></div></header>
+    <div class="lists">${L.m
+      ? list('Men', 'm', cut(L.m), `${word(cut(L.m).length)} cover ${sum(cut(L.m))}% of men`) + list('Women', 'w', cut(L.w), `${word(cut(L.w).length)} cover ${sum(cut(L.w))}% of women`)
+      : list('Everyone', 'a', cut(L.a), `${word(cut(L.a).length)} cover ${sum(cut(L.a))}% of all records. The world page has no gender data.`)}</div>
+    ${d.flag?`<p style="margin:0;font-size:.85rem"><span class="flag">!</span> Data note: ${esc(d.flag)}.</p>`:''}
+    ${d.ex.length?`<p class="foot" style="color:var(--muted);font-size:.8rem;margin:0">Removed as non-names: ${d.ex.map(esc).join(', ')}</p>`:''}`;
+  el.hidden = false;
+  document.getElementById('closeDetail').onclick = () => { el.hidden = true; openSlug = null; render(); paintMap(); };
+  el.querySelectorAll('#topn button').forEach(b => b.onclick = () => { topN = +b.dataset.n; openDetail(s, false); });
+  render(); paintMap();
+  if (!scroll) return;
+  el.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'nearest'});
+}
+
+// ---- map ----
+const ISO = {italy:'380',switzerland:'756',russia:'643',ukraine:'804',belarus:'112',egypt:'818',algeria:'012',morocco:'504',iraq:'368',iran:'364',hungary:'348',portugal:'620',poland:'616',spain:'724',france:'250',germany:'276','united-states':'840',brazil:'076',mexico:'484',greece:'300',romania:'642',japan:'392',china:'156',vietnam:'704',indonesia:'360',india:'356',turkey:'792',pakistan:'586',nigeria:'566',georgia:'268',czechia:'203',england:'826'};
+const byIso = {}; for (const d of DATA) if (d.iso) byIso[d.iso] = d;
+const LABEL = {all:'Top 100 first names · everyone', m:'Top 100 · men', w:'Top 100 · women', sur:'Top 100 surnames'};
+const COLVAR = {all:'--accent', m:'--men', w:'--women', sur:'--sur'};
+let paths = null, FEATS = null, PATH = null;
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function scale(){
+  const vals = DATA.filter(d => d.s !== 'earth' && d[metric] != null).map(d => d[metric]);
+  const lo = Math.floor(Math.min(...vals)/10)*10, hi = Math.ceil(Math.max(...vals)/10)*10;
+  const interp = d3.interpolateRgb(css('--ramp0'), css(COLVAR[metric]));
+  return {lo, hi, f: v => interp(Math.pow((v-lo)/(hi-lo||1), 0.9))};
+}
+function paintMap(){
+  if (!paths) return;
+  const sc = scale();
+  paths.attr('fill', f => { const d = byIso[f.id]; return d && d[metric] != null ? sc.f(d[metric]) : css('--nodata'); })
+       .classed('sel', f => byIso[f.id] && byIso[f.id].s === openSlug);
+  document.getElementById('legend').innerHTML =
+    `<span>${LABEL[metric]}</span><span>${sc.lo}%</span><span class="ramp" style="background:linear-gradient(90deg,${sc.f(sc.lo)},${sc.f(sc.hi)})"></span><span>${sc.hi}%</span><span><span class="nod"></span>no data</span>`;
+}
+async function drawMap(){
+  try {
+    const topo = await fetch('countries-110m.json').then(r => r.json());
+    const feats = topojson.feature(topo, topo.objects.countries).features.filter(f => f.id !== '010');
+    const proj = d3.geoNaturalEarth1().fitSize([960, 470], {type:'FeatureCollection', features: feats});
+    const path = d3.geoPath(proj);
+    FEATS = feats; PATH = path;
+    const tip = document.getElementById('maptip');
+    const svg = d3.select('#map');
+    const world = DATA.find(d => d.s === 'earth');
+    svg.append('path').datum({type: 'Sphere'}).attr('class', 'sphere').attr('d', path)
+      .on('mousemove', () => {
+        tip.innerHTML = `<b>World</b>: ${world[metric] == null ? 'no value for this measure' : world[metric].toFixed(1) + '%'} · click the ocean for the world's top names`;
+      });
+    svg.on('click', e => { if (!e.target.classList.contains('c')) openDetail('earth'); });
+    paths = svg.selectAll('path.c').data(feats).join('path')
+      .attr('class', f => 'c' + (byIso[f.id] ? ' has' : '')).attr('d', path)
+      .on('mousemove', (e, f) => {
+        const d = byIso[f.id], nm = f.properties.name;
+        tip.innerHTML = d ? `<b>${d.n === 'England' ? 'England (shown for the UK)' : d.n}</b>: ${d[metric] == null ? 'no value' : d[metric].toFixed(1) + '%'} · click for top names` : `<b>${esc(nm)}</b>: not in the dataset`;
+      })
+      .on('click', (e, f) => { if (byIso[f.id]) openDetail(byIso[f.id].s); });
+    paintMap();
+    matchMedia('(prefers-color-scheme: dark)').addEventListener('change', paintMap);
+    new MutationObserver(paintMap).observe(document.documentElement, {attributes: true, attributeFilter: ['data-theme']});
+  } catch (err) {
+    document.getElementById('maptip').textContent = 'The map could not load. The table below has every value.';
+  }
+}
+function syncSeg(){ document.querySelectorAll('#metric button').forEach(x => x.setAttribute('aria-pressed', x.dataset.k === metric)); }
+document.querySelectorAll('#metric button').forEach(b => b.addEventListener('click', () => {
+  metric = sortKey = b.dataset.k; dir = 'desc'; syncSeg(); render(); paintMap();
+}));
+document.getElementById('region').addEventListener('change', e => { region = e.target.value; render(); });
+document.querySelectorAll('#spell button').forEach(b => b.addEventListener('click', () => {
+  mode = b.dataset.k; applyMode();
+  document.querySelectorAll('#spell button').forEach(x => x.setAttribute('aria-pressed', x.dataset.k === mode));
+  render(); paintMap(); kpis();
+  if (openSlug) openDetail(openSlug, false);
+}));
+
+// highlights
+function kpis(){
+  const c = DATA.filter(d => d.s !== 'earth');
+  const top = k => c.filter(d => d[k] != null).sort((a,b) => b[k]-a[k])[0];
+  const world = DATA.find(d => d.s === 'earth');
+  const a = top('all'), s = top('sur');
+  const cavg = c.reduce((t, d) => t + d.all, 0) / c.length;
+  const it = DATA.find(d => d.s === 'italy'), ch = DATA.find(d => d.s === 'switzerland');
+  document.getElementById('kpis').innerHTML = [
+    ['Most concentrated', a.all.toFixed(1)+'%', a.n+': top 100 first names'],
+    ['Italy vs Switzerland', it.all.toFixed(0)+'% · '+ch.all.toFixed(0)+'%', 'same measure, '+DATA.filter(d=>d.s!=='earth').length+' countries'],
+    ['World', world.all.toFixed(1)+'%', 'top 100 of '+big(world.pop)+' records'],
+    ['Country average', cavg.toFixed(1)+'%', 'unweighted mean of '+c.length+' countries'],
+    ['Surnames record', s.sur.toFixed(1)+'%', s.n+': top 100 family names'],
+  ].map(([l,v,s]) => `<div class="kpi"><div class="lab">${l}</div><div class="val">${v}</div><div class="sub">${s}</div></div>`).join('');
+}
+kpis();
+render();
+drawMap();
+</script>
+
+</body>
+</html>
