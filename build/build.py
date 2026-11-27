@@ -15,6 +15,7 @@ ROOT = os.path.dirname(B)
 BASE = json.load(open(f'{B}/base.json'))
 COUNTRIES = json.load(open(f'{B}/countries.json'))
 EXCL = open(f'{B}/excluded.json').read()
+SUR = json.load(open(f'{B}/surnames.json'))  # per country: top-100 surnames [name, % of records]
 
 
 # ---------- spelling families ----------
@@ -125,7 +126,7 @@ for c in COUNTRIES:
     s = c['s']; rows = BASE[s]['rows']; T2 = c['pop']
     res, lists, ranks = metrics(rows, T2, s != 'earth')
     out.append(dict(c, raw=rnd(res['raw']), mrg=rnd(res['mrg'])))
-    NAMES[s] = lists
+    NAMES[s] = dict(lists, **({'sur': SUR[s]} if s in SUR else {}))
     for mode in ('raw', 'mrg'):
         for k, lab, g, rk, pct, cnt in ranks[mode]:
             ent = INDEX.setdefault(k, {'sp': {}, 'raw': [], 'mrg': []})

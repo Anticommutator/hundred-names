@@ -8,7 +8,7 @@ An interactive table and world map for 140 countries plus the world:
 
 - coverage of the top 100 first names: everyone, men and women separately
 - coverage of the top 100 surnames
-- the top 10 / 25 / 50 / 100 men's and women's names per country (click a country)
+- the top 10 / 25 / 50 / 100 men's and women's names per country (click a country); with "Surnames" selected, the top surnames instead
 - hover a name for its spellings and their shares; click it for a name page with a map of where it is most common
 - a quiz game: 8 rounds, guess a name from its map out of four options, 10 seconds per round,
   6.25–12.5 points for a right answer, more the faster (100 max); easy / medium / hard levels
@@ -50,7 +50,7 @@ The families come from three layers, all in `build/`:
 
 `python3 build/build.py` regenerates `index.html`, `names.json`, `ni/` and `quiz.json` from
 `build/base.json` (every listed name per country with its estimated male / female bearers),
-`build/countries.json`, `build/template.html` and the family files above.
+`build/countries.json`, `build/surnames.json` (top-100 surnames per country), `build/template.html` and the family files above.
 
 ## Files
 
