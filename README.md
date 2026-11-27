@@ -8,9 +8,10 @@ An interactive table and world map for 140 countries plus the world:
 
 - coverage of the top 100 first names: everyone, men and women separately
 - coverage of the top 100 surnames
-- the top 10 / 25 / 50 / 100 men's and women's names per country (click a country); with "Surnames" selected, the top surnames instead
+- the top 10 / 25 / 50 / 100 men's and women's names per country (click a country); with "Surnames" selected, the top surnames instead —
+  surnames get the same hover, name page, merge view, neighbours and quiz as first names
 - hover a name for its spellings and their shares; click it for a name page with a map of where it is most common
-- a quiz game: 8 rounds, guess a name from its map out of four options, 10 seconds per round,
+- a quiz game (first names or surnames): 8 rounds, guess a name from its map out of four options, 10 seconds per round,
   6.25–12.5 points for a right answer, more the faster (100 max); easy / medium / hard levels
 - for each name, the 5 names with the most similar geography
 - an option to merge spelling variants (Mohammed/Muhammad/Mohamed, Jacob/Jakob/Jakub/Yakov, Monika/Monica)
@@ -38,11 +39,13 @@ transliterations and national spellings such as Jacob / Jakob / Jakub / Yakov, M
 Karl / Carl, Sergey / Serghei. It does *not* merge different-sounding cognates (John / Juan / Ivan),
 male and female forms (Daniel / Daniela), forms that gain or lose a syllable (Maria / Marie, Fatima / Fatma),
 short forms, or different East-Asian syllables (Kun / Qun, Tam / Tham).
+Surnames follow the same rule, except that masculine and feminine forms of one family name are merged
+(Ivanov / Ivanova, Kowalski / Kowalska, Novák / Nováková); different suffixes stay apart (Ivanov / Ivanović / Ivanenko).
 
 The families come from three layers, all in `build/`:
 1. `fold()`: accents stripped, ph→f, th→t, ou→u, oo→u, ee→i, y→i, doubled letters collapsed, final vowel+h dropped;
 2. `families.txt`: hand-made transliteration groups, and `!` lines that split a fold result apart again;
-3. `merges.txt`: about 1,060 further families. Candidates were all pairs of names that are phonetically equal
+3. `merges.txt`: about 1,060 further families (surnames: `sfamilies.txt`, `smerges.txt`, about 610). Candidates were all pairs of names that are phonetically equal
    (c/k/q, w/v, z/s, kh/h, j/y…) or within one or two edits; each of the ~31,000 pairs was judged by a
    language model against the rule above, then checked for chains of merges that would join different names.
 
@@ -56,8 +59,8 @@ The families come from three layers, all in `build/`:
 
 - `index.html` — the whole page; data is embedded
 - `names.json` — per-country top-100 name lists, as listed and with spellings merged (loaded when a country is opened)
-- `ni/*.json` — cross-country name index (sharded by first letter), loaded when a name is clicked
-- `quiz.json` — 400 widespread name families with their per-country shares, for the quiz
+- `ni/*.json`, `si/*.json` — cross-country first-name / surname index (sharded by first letter), loaded when a name is clicked
+- `quiz.json`, `squiz.json` — 400 first-name / surname families with their per-country shares, for the quiz
 - `countries-110m.json` — country shapes from [world-atlas](https://github.com/topojson/world-atlas) (Natural Earth, public domain)
 
 ## Name distance

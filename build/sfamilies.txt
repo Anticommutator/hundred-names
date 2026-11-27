@@ -1,0 +1,22 @@
+# surname families, same format as families.txt
+# --- split off (same look, different surname or sound) ---
+!Boucher   # split from bucher
+!Phan   # split from fan
+!Hou   # split from hu
+!In   # split from in
+!Lee Ly   # split from li
+!Luu   # split from lu
+!Louca   # split from luca
+!Mary   # split from mari
+!Mathe   # split from mate
+!Molloy   # split from moloi
+!Nyika   # split from nika
+!Para   # split from para
+!Ray   # split from rai
+!Roos   # split from rus
+!Roussel   # split from rusel
+!Sayyid   # split from said
+!Smeets   # split from smits
+!Than   # split from tan
+!Thu   # split from tu
+!Zhou   # split from zhu

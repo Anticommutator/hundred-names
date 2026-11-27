@@ -1,0 +1,612 @@
+# surname families: one line per family, one spelling of each sub-family; first = family id
+# same surname (spelling/transliteration, or male/female form) and nearly the same sound (see README)
+Abakar Abaker
+Abbasov Abbasova
+Abdi Cabdi
+Abdraman Abdramane
+Abdul_Karim Abdelkerim
+Abdullah Abdallah
+Abdullahi Abdollahi Abdellahi Abdallahi
+Abdullayeva Abdullayev Abdullaev Abdulloeva Abdulloev Abdullaeva
+Abdulle Abdille
+Abdurakhmanova Abdurakhmanov Abdrakhmanova Abdrakhmanov
+Abdykadyrov Abdykadyrova
+Abdyldaeva Abdyldaev
+Abid Abed
+Abolina Abolins
+Abubakar Boubacar Aboubacar Abu_Bakr
+Acevedo Azevedo
+Achour Ashour
+Addai Addae
+Adomaitienė Adomaitis
+Ahmadou Ahmedou
+Ahmed Ahmad Ahamad Ahamed Ahmat
+Aisyah Aisah
+Akbarova Akbarov
+Akhmyedova Akhmyedov Ahmadova Akhmetov Ahmadov Akhmedov Akhmedova Akhmetova
+Akmatova Akmatov
+Akter Akhtar Akhter Aktar
+Al_Amin Elamin
+Al_Faqih Elfaki
+Alakbarova Alakbarov
+Aleksandrova Aleksandrov
+Alekseeva Alekseev
+Alhaji El_Hajj Alhaj Alhadji El_Hadj
+Alhassan Elhassan Alassane Alassan Alhassane El_Hassane
+Aliev Aliyeva
+Alimova Alimov Olimova Olimov
+Allahverdiyeva Allahverdiyev
+Alonso Alonzo
+Alves Alvez
+Amanova Amanov Amanow
+Amin Amine
+Andersone Andersons
+Andreassen Andresen
+Andreeva Andreev
+Angelova Angelov
+Angelovski Angelovska
+Annaev Annaeva Annayew
+Annamuradova Annamuradov
+Antoniadis Antoniades
+Antonova Antonov
+Antunes Antunez
+Arnaud Arnaut
+Asadova Asadov
+Asenova Asenov
+Asgarova Asgarov
+Ashirova Ashirov Ashyrow
+Aslanova Aslanov
+Ataeva Ataev Atayeva Atayev
+Atanasova Atanasov
+Atanasovski Atanasovska
+Azimov Azimova
+Azizova Azizov
+Ağayeva Ağayev Agaeva Agaev
+Babayeva Babayev Babayew
+Babiker Babikir
+Bagayoko Bagayogo
+Bagdonienė Bagdonas
+Bakhash Baksh
+Bakirov Bakirova
+Balogh Balog
+Balčiūnienė Balčiūnas
+Baranauskienė Baranauskas
+Barbosa Barboza
+Barotova Barotov
+Basile Bazile
+Batista Baptista
+Batyrova Batyrov
+Bayramov Bayramova Bayramow
+Bağirova Bağirov
+Begum Begam
+Belhadj Belhaj
+Belova Belov
+Berdyeva Berdyev Berdiyew
+Berzina Berzins
+Beňová Beňo
+Birhanu Berhanu
+Bizjak Bezjak
+Boboeva Boboev
+Bogdanova Bogdanovs
+Borisova Borisov
+Boukari Boukhari
+Božinovska Božinovski
+Brown Browne
+Butkus Butkienė
+Byashimova Byashimov
+Cafarova Cafarov
+Carballo Caraballo
+Charyeva Charyev Charyyew
+Chavez Chaves
+Clark Clarke
+Clausen Klausen
+Coleman Colman
+Constantinou Konstantinou
+Correa Correia
+Cortes Cortez
+Coulibaly Koulibaly
+Cvetkovski Cvetkovska
+Daly Daley
+Dambrauskienė Dambrauskas
+Davlatova Davlatov
+de_Bruin de_Bruijn
+de_Rosa da_Rosa
+de_Smet de_Smedt
+de_Souza de_Sousa
+Dekker Decker
+Dendup Dhendup
+Devi Dewi
+Dimitrova Dimitrov
+Dimova Dimov
+Dimovska Dimovski
+Dissanayake Dissanayaka
+Dixon Dickson
+Djurayev Djurayeva Jurayev Jurayeva
+Dmitrieva Dmitriev
+Dobrev Dobreva
+Doležalová Doležal
+Doucoure Doukoure
+Dovletova Dovletov
+Dupuy Dupuis
+Durdyeva Durdyev Durdyyew
+Dzhoraeva Dzhoraev
+Dzhumaeva Dzhumaev
+Dzhuraeva Dzhuraev
+Egorova Egorov Jegorova
+El_Amery El_Amary
+El_Moctar El_Mokhtar
+El_Sherfi El_Sherif
+Ergashyeva Ergashyev
+Ergeshova Ergeshov
+Esenova Esenov
+Espinoza Espinosa
+Esteves Estevez
+Farag Faraj
+Farooq Faruk
+Fatimah Fatema
+Fawzy Fauzi
+Fayzulloev Fayzulloeva
+Fekadu Fikadu
+Ferhat Farhat
+Fernandez Fernandes
+Figueredo Figueiredo
+Fjodorova Fjodorovs
+Flores Florez
+Fonseca Fonseka
+Frederiksen Fredriksen
+Freimane Freimanis
+Frolova Frolov
+Gadoeva Gadoev
+Gafurova Gafurov
+Gamal Jemal Jamal
+Geldyeva Geldyev
+Georgiadis Georgiadou Georgiades
+Georgieva Georgiev
+Giorgadze Gorgadze
+Giron Jiron
+Gjorgjiev Gjorgjieva
+Gjorgjievska Gjorgjievski
+Gomez Gomes
+Gonzalez Gonzales
+Gonçalves Gonsalves
+Goïta Koita
+Greenberg Grinberga Grinbergs
+Griffiths Griffith
+Grigorjeva Grigorjevs
+Guerrero Guerreiro
+Gulova Gulov
+Gunaratne Gunarathna
+Gunasekara Gunasekera
+Gunathilaka Gunathilake
+Gunawardana Gunawardena
+Gustafsson Gustavsson
+Gyeltshen Gyaltshen
+Haciyeva Haciyev
+Haider Haidar
+Haji Hadji
+Hamutenya Amutenya
+Haque Hoque
+Haruna Arouna
+Hasanova Hasanov Khasanova Khasanov Asanova Asanov Gasanov
+Hashem Hashim
+Hassan Hassane Hassen
+Hendriks Hendrickx
+Henriquez Enriquez Henriques
+Hissein Hisseine
+Hristova Hristov Ristova Ristov
+Huaman Guaman
+Hussain Hossain Hussein Hussen Hussien Hossein
+Hüseynova Hüseynov Khuseynov Khuseynova Guseynova Guseinov
+Ibraev Ibraeva
+Ibragimov Ibragimova Ibrahimova Ibrahimov
+Ibraimova Ibraimov
+Ilieva Iliev
+Ilievska Ilievski
+Ioannidis Ioannidou Ioannides
+Isaev Isayeva Isayev Isaeva
+Isakova Isakov
+Ishaq Ishag
+Iskakova Iskakov
+Ismailov Ismailova
+Ivanauskienė Ivanauskas
+Ivanova Ivanov Ivanovs
+Ivanovska Ivanovski
+Jacobsen Jakobsen
+Jakimovska Jakimovski
+Jankauskienė Jankauskas
+Jansone Jansons
+Jayawardena Jayawardana
+Jimenez Gimenez
+Jonaitis Jonaitienė
+Jovanov Jovanova
+Jovanovska Jovanovski
+Jørgensen Jrgensen
+Kacou Kakou
+Kadyrova Kadyrov Kodirova Kodirov
+Kairys Kairienė
+Kaliev Kalieva
+Kalnina Kalnins
+Kamiński Kaminskienė Kaminskas
+Kamolova Kamolov
+Karabaeva Karabaev
+Karagiannis Karagianni
+Karimov Karimova Kerimova Kerimov
+Karklina Karklins
+Karlsen Carlsen
+Karlsson Carlsson
+Karunaratne Karunarathna
+Katushabe Katusabe
+Kavaliauskienė Kavaliauskas
+Kazimova Kazimov
+Kazlauskienė Kazlauskas
+Khaidarov Khaidarova Aydarova Aydarov
+Khakimova Khakimov
+Khalilov Khalilova
+Khamidova Khamidov Khomidov Khomidova
+Khamis Hamisi Hamis
+Khanam Khanom
+Khodjayeva Khodjayev
+Kholikova Kholikov
+Kholova Kholov
+Kirilov Kirilova
+Klavina Klavins
+Klycheva Klychev
+Knudsen Knutsen
+Kolesnyk Colesnic
+Koleva Kolev
+Konečná Konečný
+Konstantinidis Konstantinidou Constantinides
+Kopecká Kopecký
+Kostadinova Kostadinov
+Kostova Kostov
+Kotova Kotov
+Kouame Kwame
+Kovaleva Kovalyova Kovalyov Kovalev
+Kováčik Kováčiková
+Kozak Kazak Cazac
+Kozlova Kozlov
+Kozłowski Kozlovsky Kozlovskaya
+Krasteva Krastev
+Krastina Krastins
+Krstevski Krstevska
+Krumina Krumins
+Krämer Kremer
+Kurbanova Kurbanov Kurbonova Kurbonov Qurbanova Qurbanov Gurbanov Gurbanova Gurbanow Kurbanow
+Kushnyr Cusnir
+Kuzmina Kuzmin
+Kuznetsova Kuznetsov Kuznecova Kuznecovs
+Kyriacou Kyriakou
+Lacko Lacková
+Lamprou Lambrou
+Laouali Lawali
+Lauridsen Lauritsen
+Lazarova Lazarov
+Lebedeva Lebedev
+Lefebvre Lefevre
+Lemine Elemine
+Lemos Lemus
+Liepina Liepins
+Lightbourne Lightbourn
+Lopez Lopes
+Lucas Lukas
+M'Bareck M'Barek
+Macko Macková
+Madusanka Madushanka
+Magomedov Magomedova
+Mahabir Mohabir
+Mahaman Mahamane
+Maharramova Maharramov
+Mahato Mahto
+Mahmoud Mehmood
+Makarova Makarov
+Makhmudova Makhmudov Mahmudova Mahmudov
+Makris Makri
+Malinauskienė Malinauskas
+Maman Mamane
+Mamatova Mamatov
+Mamazhanova Mamazhanov
+Mambetova Mambetov
+Mammadova Mammadov Mamedov Mamedova
+Mamytov Mamytova
+Mandal Mondal
+Maphosa Maposa
+Marco Marcu Marku Marko
+Marinova Marinov
+Marková Markov
+Markowski Markovska
+Marks Marx
+Marques Marquez
+Mathisen Mathiesen
+Matveeva Matveev
+McDonald MacDonald
+Medvedev Medvedeva
+Mehdiyeva Mehdiyev
+Melnikova Melnikov
+Melnyk Melnic
+Mendez Mendes
+Meredova Meredov Meredow
+Meyer Mayer Mayr
+Michael Micheal
+Michailidis Michaelides Michaelidou
+Mikalauskienė Mikalauskas
+Mikhaylova Mikhaylov Mihaylova Mihaylov Mihailovs
+Millimouno Millimono
+Mironova Mironov
+Mirzaei Mirzaie
+Mirzayeva Mirzayev
+Mirzoeva Mirzoev
+Miteva Mitev
+Mladenova Mladenov
+Mladenovska Mladenovski
+Mohamed Mohammad Muhammad Muhammed Mahamed Muhumed M'Hamed
+Mohammadi Mohamedi
+Mohamud Mahamud
+Moore More
+Moraes Morais
+Morozova Morozov
+Movsisyan Movsesyan
+Mugisha Mugisa
+Muhammadu Mahamadou Mohamadou Mohamedou
+Mukhammedova Mukhammedov
+Mukhtar Muktar
+Muminov Muminova
+Munteanu Muntean
+Muratov Muratova
+Murodova Murodov Muradova Muradov Muradow
+Musayeva Musayev Musaev Musoeva Musoev Musaeva
+Mustafa Mostafa
+Mustafayeva Mustafayev
+Myers Meyers
+Möller Møller
+Nabieva Nabiev
+Naimov Naimova
+Namgyel Namgyal
+Nassiri Nasseri
+Navickienė Navickas
+Navrátil Navrátilová
+Nayak Naik
+Naydenova Naydenov
+Ndlovu Ndhlovu
+Negmatova Negmatov
+Nepesova Nepesov
+Nielsen Nilsen
+Nik Nick
+Nikitina Nikitin
+Nikolaeva Nikolaev
+Nikolaidis Nicolaides
+Nikolaou Nicolaou
+Nikolova Nikolov
+Nikolovska Nikolovski
+Novikova Novikov
+Novotná Novotný
+Novruzov Novruzova
+Nowak Novák
+Nozimova Nozimov
+Nuralieva Nuraliev
+Nurmatov Nurmatova
+Nurova Nurov
+Nuryev Nuryeva
+Odinaeva Odinaev
+Oliveira Olivera
+Omuralieva Omuraliev
+Omurzakova Omurzakov
+Orazova Orazov Orazow
+Orlova Orlov
+Orucova Orucov
+Osmonaliev Osmonalieva
+Osmonova Osmonov
+Ospanova Ospanov
+Ovezova Ovezov Owezow
+Ozola Ozols
+Ozolina Ozolins
+Panagiotou Panayiotou
+Pandey Pande
+Papadakis Papadaki
+Papadopoulos Papadopoulou
+Pascual Pascoal
+Paulauskienė Paulauskas
+Pavlova Pavlov
+Pavlović Pavlovich
+Peneva Penev
+Persaud Persad
+Petersons Petersone
+Petkova Petkov
+Petkovski Petkovska
+Petraitis Petraitienė
+Petrauskienė Petrauskas
+Petreska Petreski
+Petrov Petrova Petrovs
+Petrović Petrovich
+Petrovska Petrovski
+Petruševska Petruševski
+Pokorná Pokorný
+Popov Popova
+Pospíšilová Pospíšil
+Procházková Procházka
+Pulatova Pulatov
+Qarayev Qarayeva Karaeva
+Qasimova Qasimov Kasimova Kasimov
+Quesada Quezada
+Quiroz Quiros
+Quliyeva Quliyev Kulieva Kuliev
+Radeva Radev
+Radzhabova Radzhabov
+Ragab Rajab
+Rahman Rehman Rahaman Rohman
+Railean Raileanu
+Rajapaksha Rajapakse
+Rakhimova Rakhimov Rahimova Rahimov
+Rakhmatov Rakhmatova Rahmatova Rahmatov
+Rakhmonova Rakhmonov Rakhmanov Rakhmanova Rahmonova Rahmonov
+Ramadan Ramadhan
+Ramadhani Ramadani
+Ramanauskienė Ramanauskas
+Ramnath Ramnauth
+Rampersad Rampersaud
+Rashid Rachid
+Rashidi Rachidi
+Rasulov Rasulova
+Rathnayake Rathnayaka
+Razaee Razaie
+Redzhepova Redzhepov
+Rejepow Rejepova Rejepov
+Reuben Ruben
+Risteska Risteski
+Ristovski Ristovska
+Rizoeva Rizoev
+Rodriguez Rodrigues Rodrfguez
+Romanova Romanov
+Rozikov Rozikova
+Rozyeva Rozyev
+Ruseva Rusev
+Rusnac Rusnák
+Rustamova Rustamov
+Rutkauskienė Rutkauskas
+Rzayeva Rzayev
+Sabirova Sabirov
+Sackey Sackie
+Sadykova Sadykov Sadiqova Sadiqov
+Safarova Safarov
+Saidova Saidov
+Saidu Seydou
+Sakalauskienė Sakalauskas
+Salihu Salifou
+Salum Salumu
+Samadova Samadov
+Samieva Samiev
+Samson Sampson
+Samuel Samwel
+Sanders Saunders
+Sanginova Sanginov
+Saparov Saparova Saparow
+Sarkar Sarker
+Sattorova Sattorov
+Satybaldiev Satybaldieva
+Savickienė Savickas
+Sawadogo Savadogo
+Schmidt Schmid
+Schröder Schroeder
+Schulz Schultz
+Schwarz Schwartz Swartz
+Semenova Zemanová
+Sergeeva Sergeev
+Shaikh Shaik Sheikh Cheikh Sheik
+Sharif Sherif Cherif
+Sharifova Sharifov
+Sharipov Sharipova
+Sharma Sarma
+Shodieva Shodiev
+Shoeva Shoev
+Shuaibu Souaibou
+Silina Silins
+Simeonova Simeonov
+Sinkevich Sinkevič
+Slavova Slavov
+Smagulov Smagulova
+Smirnova Smirnov Smirnovs
+Sokolova Sokolov
+Solieva Soliev
+Solis Soliz
+Solomon Salomon
+Soumahoro Soumaoro
+Souza Sousa
+Spasova Spasov
+Spasovski Spasovska
+Stankevich Stankevič
+Stefanova Stefanov
+Stefanovska Stefanovski
+Stepanova Stepanov
+Stojanovski Stojanovska Stojanoska
+Stojkovska Stojkovski
+Stoyanova Stoyanov Stojanova Stojanov
+Strode Strods
+Ström Strøm
+Suleiman Sulaiman Suliman Soliman Suleman Souleymane Sulieman
+Suleymenov Suleymenova
+Sullivan O'Sullivan
+Sultanov Sultanova
+Svobodová Svoboda
+Sydykova Sydykov
+Szabó Szabová Sabo
+Sørensen Srensen
+Süleymanova Süleymanov Sulaymanova Sulaymanov
+Tabarova Tabarov
+Tagaev Tagaeva
+Taganova Taganov
+Tarasova Tarasov
+Tavares Taveras Tavarez
+Tağiyeva Tağiyev
+Tejeda Tejada
+Thakur Thakor
+Thompson Thomson
+Tichá Tichý
+Tkach Tkáč
+Todorova Todorov
+Todorovska Todorovski
+Toktosunova Toktosunov
+Torres Torrez
+Trajkovski Trajkovska
+Tshabalala Shabalala
+Tsvetkova Tsvetkov
+Tulegenov Tulegenova
+Tursunov Tursunova
+Umar Omar Cumar
+Umarov Umarova Omarov Omarova
+Urbonienė Urbonas
+Usman Osman Ousmane
+Usmanov Usmanova
+Valcheva Valchev
+Valdez Valdes
+Valentová Valenta
+Valiyeva Valiyev
+van_Wyk van_Wijk
+Vanaga Vanags
+Vasileiou Vassiliou
+Vasileva Vasilev Vasiljeva Vasiljevs Vassiljev
+Vasiliauskienė Vasiliauskas
+Vazquez Vasquez
+Velasquez Velazquez
+Veselá Veselý
+Vitola Vitols
+Vogt Voigt
+Volkova Volkov
+Vyšniauskienė Vyšniauskas
+Wasilewski Vasilevskaya Vasilevsky
+Weiß Weiss
+Wouters Wauters
+Xalilova Xalilov
+Yakovleva Yakovlev Jakovleva
+Yakubov Yakubova
+Yaneva Yanev Janev
+Yankova Yankov
+Yaqoob Yagoub Yacoub
+Yaseen Yassine
+Yeasmin Yasmin Yesmin
+Yohannes Johannes
+Yordanova Yordanov
+Yorova Yorov
+Yuldashyev Yuldashyeva Yuldasheva Yuldashev Yuldosheva Yuldoshev
+Yunusova Yunusov
+Yusifova Yusifov
+Yusuf Yousef Yousaf Yousif Yosef
+Yusupov Yusupova
+Zakari Zakaria Zacharia
+Zakharova Zakharov
+Zakirov Zakirova
+Zarina Zarins
+Zaytseva Zaytsev
+Zeynalov Zeynalova
+Zholdoshova Zholdoshov
+Zhoroeva Zhoroev
+Zhumabaev Zhumabaeva
+Zhusupov Zhusupova
+Özkan Özcan
+Černiauskienė Černiauskas
+Černá Černý
+Đukić Djukić
+Šimková Šimko
+Šimkus Šimkienė
+Šťastný Šťastná
+Žemaitis Žemaitienė
+Žilinskienė Žilinskas
+Žukauskienė Žukauskas
